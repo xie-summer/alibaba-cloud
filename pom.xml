@@ -74,6 +74,7 @@
     </dependencyManagement>
     <modules>
         <module>nacos-discovery</module>
+        <module>cloud-gateway</module>
         <module>cloud-dependencies</module>
     </modules>
     <build>
