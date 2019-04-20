@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cloud</artifactId>
+        <groupId>com.springframework</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-gateway</artifactId>
+    <packaging>pom</packaging>
+    <name>cloud-gateway</name>
+    <description>网关服务</description>
+    <modules>
+        <module>gateway-api</module>
+        <module>gateway-api-server</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <!-- api-->
+        <gateway-api.version>0.0.1-SNAPSHOT</gateway-api.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--module-->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>gateway-api</artifactId>
+                <version>${gateway-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

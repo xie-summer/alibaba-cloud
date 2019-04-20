@@ -89,3 +89,21 @@ hs_err_pid*
 
 */target/
 
+*/logs/
+logs
+*/.mvn
+*/2019-04-20
+cloud-gateway/gateway-api-server/target/
+cloud-gateway/gateway-api/target/
+common-modules/framework-cache/target/
+common-modules/framework-constants/target/
+common-modules/framework-datasource/target/
+common-modules/framework-domain/src/
+common-modules/framework-domain/target/
+common-modules/framework-enum/target/apidocs/
+common-modules/framework-enum/target/classes/
+common-modules/framework-enum/target/generated-sources/
+common-modules/framework-enum/target/javadoc-bundle-options/
+common-modules/framework-feign/target/
+common-modules/framework-redis/target/
+logs/
