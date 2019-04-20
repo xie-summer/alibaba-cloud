@@ -1,7 +1,7 @@
 package com.springframework.gateway.service.impl;
 
 import com.springframework.enums.rediskey.CacheNamePrefixEnum;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 import com.springframework.gateway.event.CacheExpireFailEvent;
 import com.springframework.gateway.service.RouteConfigCacheService;
 import com.springframework.redis.GenericCacheRedisManager;
@@ -31,7 +31,7 @@ public class RouteConfigCacheServiceImpl extends GenericCacheRedisManager implem
      * @param routeConfig
      */
     @Override
-    public void saveRouteConfigCache(RouteConfig routeConfig) {
+    public void saveRouteConfigCache(RouteConfigDO routeConfig) {
         this.hset(CACHE_PREFIX, routeConfig.getServiceId(), routeConfig, DEFAULT_CACHE_TIME);
     }
 
@@ -42,8 +42,8 @@ public class RouteConfigCacheServiceImpl extends GenericCacheRedisManager implem
      * @return
      */
     @Override
-    public RouteConfig findRouteConfigCache(String serviceId) {
-        return (RouteConfig) this.hget(CACHE_PREFIX, serviceId);
+    public RouteConfigDO findRouteConfigCache(String serviceId) {
+        return (RouteConfigDO) this.hget(CACHE_PREFIX, serviceId);
     }
 
     /**

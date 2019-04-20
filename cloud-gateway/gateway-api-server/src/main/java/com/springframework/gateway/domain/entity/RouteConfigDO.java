@@ -1,14 +1,12 @@
 package com.springframework.gateway.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.springframework.domain.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * @author summer
@@ -19,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("route_config")
-public class RouteConfig extends BaseEntity<RouteConfig> {
+public class RouteConfigDO extends BaseEntity<RouteConfigDO> {
 
     @TableField("route_id")
     private String routeId;

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;
 import com.springframework.gateway.common.thread.CloudGatewayThreadFactory;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 import com.springframework.gateway.service.RouteConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -163,7 +163,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                             }
                             routeDefinition.getFilters().add(filter);
                         }
-                        final RouteConfig config = saveOrUpdateRouteConfig(routeDefinition, serviceId);
+                        final RouteConfigDO config = saveOrUpdateRouteConfig(routeDefinition, serviceId);
                         if (log.isDebugEnabled()) {
                             log.debug("保存路由配置数量为{},参数{}，服务id{}", config, routeDefinition, serviceId);
                         }
@@ -172,8 +172,8 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionRep
                 });
     }
 
-    private RouteConfig saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
-        RouteConfig routeConfig = new RouteConfig();
+    private RouteConfigDO saveOrUpdateRouteConfig(RouteDefinition routeDefinition, String serviceId) {
+        RouteConfigDO routeConfig = new RouteConfigDO();
         routeConfig.setId(null);
         routeConfig.setRouteId(routeDefinition.getId());
         routeConfig.setFilters(JSONObject.toJSONString(routeDefinition.getFilters()));

@@ -1,7 +1,7 @@
 package com.springframework.gateway.service;
 
 import com.springframework.cache.GenericCacheManager;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 
 /**
  * @author summer
@@ -13,13 +13,13 @@ public interface RouteConfigCacheService extends GenericCacheManager {
      *
      * @param routeConfig
      */
-    void saveRouteConfigCache(RouteConfig routeConfig);
+    void saveRouteConfigCache(RouteConfigDO routeConfig);
 
     /** 缓存查询
      * @param serviceId
      * @return
      */
-    RouteConfig findRouteConfigCache(String serviceId);
+    RouteConfigDO findRouteConfigCache(String serviceId);
 
     /** 缓存过期
      * @param routeId

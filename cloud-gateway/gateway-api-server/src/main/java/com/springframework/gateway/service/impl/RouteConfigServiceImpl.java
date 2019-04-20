@@ -2,7 +2,7 @@ package com.springframework.gateway.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 import com.springframework.gateway.domain.repository.impl.RouteConfigDaoImpl;
 import com.springframework.gateway.service.RouteConfigCacheService;
 import com.springframework.gateway.service.RouteConfigService;
@@ -44,7 +44,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
-    public boolean saveRouteConfig(RouteConfig routeConfig) {
+    public boolean saveRouteConfig(RouteConfigDO routeConfig) {
         routeConfigDao.saveRouteConfig(routeConfig);
         configCacheService.saveRouteConfigCache(routeConfig);
         return true;
@@ -58,13 +58,13 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public boolean saveRouteConfig(RouteConfigDTO routeConfigDTO) {
-        RouteConfig routeConfig = this.covertByRouteConfigDTO(routeConfigDTO);
+        RouteConfigDO routeConfig = this.covertByRouteConfigDTO(routeConfigDTO);
         return saveRouteConfig(routeConfig);
     }
 
     @Override
     public List<RouteDefinition> listRouteDefinition() {
-        final List<RouteConfig> routeConfigList = routeConfigDao.findAll();
+        final List<RouteConfigDO> routeConfigList = routeConfigDao.findAll();
         if (!CollectionUtils.isEmpty(routeConfigList)) {
             List<RouteConfigDTO> dtoList = new ArrayList<>(10);
             routeConfigList.parallelStream().forEach(routeConfig -> {
@@ -89,7 +89,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     @Override
     public RouteConfigDTO findRouteConfig(@NotEmpty String serviceId) {
-        RouteConfig routeConfig = getRouteConfigByServiceId(serviceId);
+        RouteConfigDO routeConfig = getRouteConfigByServiceId(serviceId);
         return covertToRouteConfigDTO(routeConfig);
     }
 
@@ -108,7 +108,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     }
 
     @Override
-    public RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig) {
+    public RouteConfigDTO covertToRouteConfigDTO(RouteConfigDO routeConfig) {
         if (routeConfig == null) {
             return null;
         }
@@ -123,7 +123,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
      * @return 查询所有路由配置
      */
     @Override
-    public List<RouteConfig> listAllRouteConfig() {
+    public List<RouteConfigDO> listAllRouteConfig() {
         return routeConfigDao.findAll();
     }
 
@@ -132,8 +132,8 @@ public class RouteConfigServiceImpl implements RouteConfigService {
      * @return
      */
     @Override
-    public RouteConfig getRouteConfigByServiceId(@NotEmpty String serviceId) {
-        RouteConfig routeConfig = configCacheService.findRouteConfigCache(serviceId);
+    public RouteConfigDO getRouteConfigByServiceId(@NotEmpty String serviceId) {
+        RouteConfigDO routeConfig = configCacheService.findRouteConfigCache(serviceId);
         if (routeConfig == null) {
             routeConfig = routeConfigDao.findRouteConfig(serviceId);
             Optional.ofNullable(routeConfig).ifPresent(r -> {
@@ -148,8 +148,8 @@ public class RouteConfigServiceImpl implements RouteConfigService {
      * @return
      */
     @Override
-    public RouteConfig getRouteConfigById(@NotNull Long id) {
-        RouteConfig routeConfig = new RouteConfig();
+    public RouteConfigDO getRouteConfigById(@NotNull Long id) {
+        RouteConfigDO routeConfig = new RouteConfigDO();
         routeConfig.setId(id);
         return routeConfig.selectById();
     }
@@ -160,9 +160,9 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void delRouteConfigById(Long id) {
-        RouteConfig routeConfig = new RouteConfig();
+        RouteConfigDO routeConfig = new RouteConfigDO();
         routeConfig.setId(id);
-        final RouteConfig config = routeConfig.selectById();
+        final RouteConfigDO config = routeConfig.selectById();
         configCacheService.expireRouteConfigCache(config.getRouteId());
         routeConfig.deleteById();
     }
@@ -193,8 +193,8 @@ public class RouteConfigServiceImpl implements RouteConfigService {
         return null;
     }
 
-    private RouteConfig covertByRouteConfigDTO(RouteConfigDTO routeConfigDTO) {
-        RouteConfig routeConfig = new RouteConfig();
+    private RouteConfigDO covertByRouteConfigDTO(RouteConfigDTO routeConfigDTO) {
+        RouteConfigDO routeConfig = new RouteConfigDO();
         routeConfig.setStatus(routeConfigDTO.getStatus());
         routeConfig.setFilters(routeConfigDTO.getFilters());
         routeConfig.setPredicates(routeConfigDTO.getPredicates());

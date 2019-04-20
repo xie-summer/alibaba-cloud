@@ -1,7 +1,7 @@
 package com.springframework.gateway.service;
 
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface RouteConfigService {
      * @param routeConfig
      * @return
      */
-    boolean saveRouteConfig(RouteConfig routeConfig);
+    boolean saveRouteConfig(RouteConfigDO routeConfig);
 
     /**
      * 保存路由配置
@@ -56,24 +56,24 @@ public interface RouteConfigService {
      * @param routeConfig
      * @return
      */
-    public RouteConfigDTO covertToRouteConfigDTO(RouteConfig routeConfig);
+    public RouteConfigDTO covertToRouteConfigDTO(RouteConfigDO routeConfig);
 
     /**
      * @return 查询所有路由配置
      */
-    List<RouteConfig> listAllRouteConfig();
+    List<RouteConfigDO> listAllRouteConfig();
 
     /**
      * @param serviceId 根据serviceId查询
      * @return
      */
-    RouteConfig getRouteConfigByServiceId(String serviceId);
+    RouteConfigDO getRouteConfigByServiceId(String serviceId);
 
     /**
      * @param id
      * @return
      */
-    RouteConfig getRouteConfigById(Long id);
+    RouteConfigDO getRouteConfigById(Long id);
 
     /**
      * @param id

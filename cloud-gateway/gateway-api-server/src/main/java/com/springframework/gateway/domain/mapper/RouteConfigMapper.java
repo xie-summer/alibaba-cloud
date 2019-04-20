@@ -1,7 +1,7 @@
 package com.springframework.gateway.domain.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2018-07-03
  */
 @Mapper
-public interface RouteConfigMapper extends BaseMapper<RouteConfig> {
+public interface RouteConfigMapper extends BaseMapper<RouteConfigDO> {
 
     /**
      * 查询
@@ -27,6 +27,6 @@ public interface RouteConfigMapper extends BaseMapper<RouteConfig> {
      * @return
      */
     @Select("select * from route_config where service_id = #{serviceId} limit #{limit}")
-    List<RouteConfig> selecRouteConfigtList(@Param("serviceId") String serviceId, @Param("limit") Integer limit);
+    List<RouteConfigDO> selecRouteConfigtList(@Param("serviceId") String serviceId, @Param("limit") Integer limit);
 
 }

@@ -2,7 +2,7 @@ package com.springframework.gateway.configure;
 
 import com.google.common.collect.Lists;
 import com.springframework.constants.CommonConstant;
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
@@ -34,7 +34,7 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
     @Override
     @SuppressWarnings("unchecked")
     public Mono<Void> save(Mono<RouteDefinition> route) {
-        RouteConfig routeConfig = new RouteConfig();
+        RouteConfigDO routeConfig = new RouteConfigDO();
         Date curr = new Date(Instant.now().getEpochSecond());
         StringBuilder filtersSts = new StringBuilder();
         StringBuilder predicateListStr = new StringBuilder();
@@ -74,7 +74,7 @@ public class DynamicRouteDefinitionLocator implements RouteDefinitionRepository 
     @Override
     @SuppressWarnings("unchecked")
     public Flux<RouteDefinition> getRouteDefinitions() {
-//        Map<String,RouteConfig> routeConfigs = (Map<String, RouteConfig>) redis.opsForHash().entries(CommonConstant.ROUTE_KEY).values();
+//        Map<String,RouteConfigDO> routeConfigs = (Map<String, RouteConfigDO>) redis.opsForHash().entries(CommonConstant.ROUTE_KEY).values();
         List<RouteDefinition> routeDefinitionList = Lists.newArrayList();
 //        routeConfigs.forEach((k,v) -> {
 //            RouteDefinition routeDefinition = new RouteDefinition();

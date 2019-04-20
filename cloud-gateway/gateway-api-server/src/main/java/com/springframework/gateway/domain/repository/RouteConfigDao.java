@@ -1,6 +1,6 @@
 package com.springframework.gateway.domain.repository;
 
-import com.springframework.gateway.domain.entity.RouteConfig;
+import com.springframework.gateway.domain.entity.RouteConfigDO;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ public interface RouteConfigDao {
      * @param routeConfig
      * @return
      */
-    boolean saveRouteConfig(RouteConfig routeConfig);
+    boolean saveRouteConfig(RouteConfigDO routeConfig);
 
     /**
      * @return
      */
-    List<RouteConfig> findAll();
+    List<RouteConfigDO> findAll();
 
     /**
      * 查询
@@ -28,14 +28,14 @@ public interface RouteConfigDao {
      * @param serviceId
      * @return
      */
-    RouteConfig findRouteConfig(String serviceId);
+    RouteConfigDO findRouteConfig(String serviceId);
 
     /**查询
      * @param serviceId
      * @param status
      * @return
      */
-    RouteConfig findRouteConfig(String serviceId, Boolean status);
+    RouteConfigDO findRouteConfig(String serviceId, Boolean status);
 
     /** 根据 routeId删除配置（逻辑删除）
      * @param routeId
