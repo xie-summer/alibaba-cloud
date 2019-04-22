@@ -10,60 +10,32 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cloud-gateway</artifactId>
+    <packaging>pom</packaging>
+    <name>cloud-gateway</name>
+    <description>网关服务</description>
+    <modules>
+        <module>gateway-api</module>
+        <module>gateway-api-server</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <docker.image.prefix>xieshengrong</docker.image.prefix>
-        <dockerfile-maven-plugin.version>1.4.9</dockerfile-maven-plugin.version>
-    </properties>
-    <!-- dependencies -->
-    <dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!--nacos 注册中心-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!--配置-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- tag::plugin[] -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>${dockerfile-maven-plugin.version}</version>
-                <configuration>
-                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                    <tag>${project.version}</tag>
-                    <buildArgs>
-                        <jarFile>target/${project.build.finalName}.jar</jarFile>
-                    </buildArgs>
-                </configuration>
-            </plugin>
-            <!-- end::plugin[] -->
-        </plugins>
-    </build>
+        <!-- api-->
+        <gateway-api.version>0.0.1-SNAPSHOT</gateway-api.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--module-->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>gateway-api</artifactId>
+                <version>${gateway-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
