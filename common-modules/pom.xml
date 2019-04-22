@@ -24,6 +24,8 @@
         <module>framework-domain</module>
         <module>framework-cache</module>
         <module>framework-redis</module>
+        <module>framework-mvc</module>
+        <module>framework-swgger</module>
     </modules>
 
     <dependencies>

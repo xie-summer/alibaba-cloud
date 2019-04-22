@@ -98,6 +98,7 @@
         <module>cloud-dependencies</module>
         <module>nacos-discovery</module>
         <module>cloud-gateway</module>
+        <module>cloud-auth</module>
         <module>common-modules</module>
     </modules>
     <build>
