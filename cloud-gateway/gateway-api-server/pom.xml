@@ -20,7 +20,6 @@
             <artifactId>gateway-api</artifactId>
         </dependency>
         <!--内部框架-->
-
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-datasource</artifactId>

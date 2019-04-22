@@ -18,7 +18,7 @@
 package com.springframework.constants;
 
 /**
- * @author lengleng
+ * @author summer
  * @date 2017/10/29
  */
 public interface CommonConstant {

@@ -5,8 +5,7 @@
     <parent>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-build</artifactId>
-        <version>2.0.4.RELEASE</version>
-        <relativePath/>
+        <version>2.1.4.RELEASE</version>
     </parent>
     <groupId>com.springframework</groupId>
     <artifactId>cloud</artifactId>
@@ -22,15 +21,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-boot-admin.version>2.0.1</spring-boot-admin.version>
-        <spring-boot-admin-ui.version>2.0.1</spring-boot-admin-ui.version>
-        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <spring-boot-admin.version>2.1.4</spring-boot-admin.version>
+        <spring-boot-admin-ui.version>2.1.4</spring-boot-admin-ui.version>
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
 
         <spring-cloud-starter-netflix-turbine.version>1.4.4.RELEASE</spring-cloud-starter-netflix-turbine.version>
-        <spring-cloud-starter-stream-rabbit.version>2.0.0.RELEASE</spring-cloud-starter-stream-rabbit.version>
-        <spring-cloud-starter-oauth2.version>1.2.2.RELEASE</spring-cloud-starter-oauth2.version>
-        <spring-cloud-gateway.version>2.0.2.RELEASE</spring-cloud-gateway.version>
-        <spring-cloud-netflix-dependencies.version>2.0.2.RELEASE</spring-cloud-netflix-dependencies.version>
+        <spring-cloud-starter-stream-rabbit.version>2.1.1.RELEASE</spring-cloud-starter-stream-rabbit.version>
+        <spring-cloud-starter-oauth2.version>2.1.2.RELEASE</spring-cloud-starter-oauth2.version>
+        <spring-cloud-gateway.version>2.1.1.RELEASE</spring-cloud-gateway.version>
+        <spring-cloud-netflix-dependencies.version>2.1.1.RELEASE</spring-cloud-netflix-dependencies.version>
+        <spring-cloud-openfeign-dependencies.version>2.1.1.RELEASE</spring-cloud-openfeign-dependencies.version>
         <cloud-dependencies.version>0.0.1-SNAPSHOT</cloud-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>0.9.0.RELEASE</spring-cloud-alibaba-dependencies.version>
     </properties>
@@ -73,8 +73,22 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign-dependencies</artifactId>
+                <version>${spring-cloud-openfeign-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-gateway-dependencies</artifactId>
                 <version>${spring-cloud-gateway.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.1.4.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

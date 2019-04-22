@@ -3,7 +3,6 @@ package com.springframework.feign.configure;
 import com.springframework.feign.filter.OriginFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnProperty(value = "security.origin-filter.enabled", matchIfMissing = true)
-public class FeignConfiguration extends FeignAutoConfiguration {
+public class FeignConfiguration  {
 
     @Bean
     @ConditionalOnMissingBean(OriginFilter.class)

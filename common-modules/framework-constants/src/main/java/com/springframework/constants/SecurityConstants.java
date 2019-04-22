@@ -18,7 +18,7 @@
 package com.springframework.constants;
 
 /**
- * @author lengleng
+ * @author summer
  * @date 2017-12-18
  */
 public interface SecurityConstants {
