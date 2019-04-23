@@ -22,8 +22,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         LOGGER.info("      ========================================= 身份认证失败..................... ");
-
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
+        LOGGER.error("Responding with unauthorized error. Message - {}", e.getMessage());
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 
 }

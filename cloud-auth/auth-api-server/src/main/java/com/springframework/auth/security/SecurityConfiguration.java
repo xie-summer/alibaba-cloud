@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import javax.annotation.Resource;
 
@@ -27,7 +28,7 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Resource(name = "userService")
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -51,9 +52,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 排查认证，/auto/** 路径的拦截，有其他路径，这里添加即可
+                .antMatchers("/login", "/oauth/**").permitAll()
                 .antMatchers("/oauth/**").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated()
                 .and().formLogin().permitAll()
+                .failureUrl("/login-error").successForwardUrl("/index")
+                .and().logout().addLogoutHandler(new SecurityContextLogoutHandler())
+                .logoutSuccessUrl("/index").clearAuthentication(true).permitAll()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 
 

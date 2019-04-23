@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 /**
  * @author summer
@@ -120,11 +121,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Resource
+    @Autowired
     private RedisConnectionFactory redisConnection;
 
-    @Resource(name = "userService")
+    @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private DataSource dataSource;
 
 
     @Override
@@ -132,9 +137,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         LOGGER.info("===============配置授权服务器开始...=========");
         // 用 BCrypt 对密码编码
         String secret = new BCryptPasswordEncoder().encode(clientSecret);
+//        configurer.jdbc(dataSource)
         //配置3个个客户端,一个用于password认证、一个用于client认证、一个用于authorization_code认证
+        // 使用in-memory存储
         configurer.inMemory()
-                // 使用in-memory存储
                 .withClient(credentialsClientId)
                 //client_id用来标识客户的Id  客户端1
                 .resourceIds(resourceIds)
@@ -192,10 +198,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore())
+        endpoints.tokenStore(jwtTokenStore())
                 .authenticationManager(authenticationManager)
                 // 这里设置获取token的方式，redis或者jwt,当前使用redis
-                .accessTokenConverter(accessTokenConverter())
+                .accessTokenConverter(jwtAccessTokenConverter())
                 //支持GET  POST  请求获取token
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 // 必须注入userDetailsService否则根据refresh_token无法加载用户信息
@@ -254,6 +260,21 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("bcrypt");
+/***
+ //			 * 重写增强token方法,用于自定义一些token返回的信息
+ //			 */
+//			@Override
+//			public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+//				String userName = authentication.getUserAuthentication().getName();
+//				User user = (User) authentication.getUserAuthentication().getPrincipal();// 与登录时候放进去的UserDetail实现类一直查看link{SecurityConfiguration}
+//				/** 自定义一些token属性 ***/
+//				final Map<String, Object> additionalInformation = new HashMap<>();
+//				additionalInformation.put("userName", userName);
+//				additionalInformation.put("roles", user.getAuthorities());
+//				((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
+//				OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
+//				return enhancedToken;
+//			}
 
         return converter;
     }
@@ -278,7 +299,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @ConditionalOnMissingBean(value = ResourceServerTokenServices.class)
     public ResourceServerTokenServices tokenService() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setTokenStore(jwtTokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
