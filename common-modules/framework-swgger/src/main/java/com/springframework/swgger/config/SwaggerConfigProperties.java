@@ -32,9 +32,21 @@ public class SwaggerConfigProperties {
      */
     private String termsOfServiceUrl = "";
     /**
+     * 联系人名称
+     */
+    private String contactName="";
+    /**
+     * 联系人地址
+     */
+    private String contactUrl="";
+    /**
+     * 联系人邮箱
+     */
+    private String contactEmail="";
+    /**
      * 联系人
      */
-    private Contact contact = new Contact("", "", "xieshengrong@live.com");
+    private Contact contact = new Contact(contactName, contactUrl, contactEmail);
     /**
      * 扩展
      */

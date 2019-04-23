@@ -19,5 +19,9 @@
             <groupId>com.springframework</groupId>
             <artifactId>framework-mvc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-swgger</artifactId>
+        </dependency>
     </dependencies>
 </project>
