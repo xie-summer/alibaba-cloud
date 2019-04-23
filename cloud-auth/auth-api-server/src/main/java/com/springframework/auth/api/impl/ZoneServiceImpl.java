@@ -17,27 +17,27 @@ public class ZoneServiceImpl implements ZoneService {
 
     @Override
     public Long create(@RequestBody ZoneDTO dto) {
-        return null;
+        return 0L;
     }
 
     @Override
     public Integer update(@RequestBody ZoneDTO dto) {
-        return null;
+        return 0;
     }
 
     @Override
     public ZoneDTO list(@RequestBody ZoneDTO dto, @RequestParam(value = "pageindex") int pageIndex, @RequestParam(value = "pagesize") int pageSize) {
-        return null;
+        return new ZoneDTO();
     }
 
     @Override
     public Integer deleteByPrimaryKey(@RequestParam(value = "id") Long id) {
-        return null;
+        return 0;
     }
 
     @Override
     public Integer batchDeleteByPrimaryKey(@RequestBody List<Long> ids) {
-        return null;
+        return 0;
     }
 
 }
