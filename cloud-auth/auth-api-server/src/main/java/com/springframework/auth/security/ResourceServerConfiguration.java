@@ -4,6 +4,7 @@ package com.springframework.auth.security;
 import com.springframework.auth.security.handler.CustomAuthenticationEntryPoint;
 import com.springframework.auth.security.handler.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,11 +50,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 
     @Bean
+    @ConditionalOnMissingBean
     public LogoutSuccessHandler customLogoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public AuthenticationEntryPoint customAuthenticationEntryPoint() {
         return new CustomAuthenticationEntryPoint();
     }

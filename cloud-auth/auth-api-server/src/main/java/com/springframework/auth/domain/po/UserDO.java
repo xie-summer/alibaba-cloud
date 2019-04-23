@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserDO extends BaseEntity<UserDO> {
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
     private String sex;
     private String phoneNumber;
     private String email;
