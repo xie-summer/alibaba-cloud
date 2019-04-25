@@ -8,7 +8,7 @@
         <version>2.1.4.RELEASE</version>
     </parent>
     <groupId>com.springframework</groupId>
-    <artifactId>cloud-dependencies</artifactId>
+    <artifactId>cloud-bom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
@@ -17,7 +17,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-
+        <!--内部发布依赖-->
+        <auth-api.version>0.0.1-SNAPSHOT</auth-api.version>
+        <user-api.version>0.0.1-SNAPSHOT</user-api.version>
+        <gateway-api.version>0.0.1-SNAPSHOT</gateway-api.version>
         <!--内部框架-->
         <!--framework-->
         <framework-cache.version>0.0.1-SNAPSHOT</framework-cache.version>
@@ -104,6 +107,24 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!--  内部发布依赖  -->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>auth-api</artifactId>
+                <version>${auth-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>user-api</artifactId>
+                <version>${user-api.version}</version>
+            </dependency>
+                <!--module-->
+                <dependency>
+                    <groupId>com.springframework</groupId>
+                    <artifactId>gateway-api</artifactId>
+                    <version>${gateway-api.version}</version>
+                </dependency>
+            <!--  内部发布依赖  end-->
             <!--  内部框架 -->
             <dependency>
                 <groupId>com.springframework</groupId>

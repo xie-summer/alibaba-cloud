@@ -27,15 +27,4 @@
         <gateway-api.version>0.0.1-SNAPSHOT</gateway-api.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <!--module-->
-            <dependency>
-                <groupId>com.springframework</groupId>
-                <artifactId>gateway-api</artifactId>
-                <version>${gateway-api.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
 </project>

@@ -2,7 +2,7 @@ package com.springframework.gateway.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import com.springframework.gateway.domain.repository.impl.RouteConfigDaoImpl;
 import com.springframework.gateway.service.RouteConfigCacheService;
 import com.springframework.gateway.service.RouteConfigService;

@@ -1,7 +1,7 @@
 package com.springframework.gateway.service.impl;
 
 import com.springframework.enums.rediskey.CacheNamePrefixEnum;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import com.springframework.gateway.event.CacheExpireFailEvent;
 import com.springframework.gateway.service.RouteConfigCacheService;
 import com.springframework.redis.GenericCacheRedisManager;

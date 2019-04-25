@@ -1,11 +1,10 @@
 package com.springframework.auth.security.service.impl;
 
 import com.google.common.collect.Lists;
-import com.springframework.auth.domain.po.UserDO;
-import com.springframework.auth.service.MemberService;
+import com.springframework.auth.remote.UserServiceClient;
+import com.springframework.user.api.domain.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author summer
@@ -22,11 +20,11 @@ import java.util.List;
 public class UserServiceImpl implements UserDetailsService {
 
     @Autowired
-    private MemberService memberService;
+    private UserServiceClient userServiceClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDO user = memberService.getByUserName(username);
+        UserVO user = userServiceClient.getByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }

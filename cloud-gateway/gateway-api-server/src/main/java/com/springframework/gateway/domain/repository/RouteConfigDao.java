@@ -1,6 +1,6 @@
 package com.springframework.gateway.domain.repository;
 
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 
 import java.util.List;
 

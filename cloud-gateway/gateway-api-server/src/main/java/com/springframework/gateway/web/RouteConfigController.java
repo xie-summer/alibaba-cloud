@@ -1,6 +1,6 @@
 package com.springframework.gateway.web;
 
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import com.springframework.gateway.service.RouteConfigService;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.ApplicationEventPublisher;

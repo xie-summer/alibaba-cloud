@@ -3,7 +3,7 @@ package com.springframework.gateway.domain.repository.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import com.springframework.gateway.domain.mapper.RouteConfigMapper;
 import com.springframework.gateway.domain.repository.RouteConfigDao;
 import org.springframework.beans.factory.annotation.Autowired;

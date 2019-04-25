@@ -31,15 +31,15 @@
         <spring-cloud-gateway.version>2.1.1.RELEASE</spring-cloud-gateway.version>
         <spring-cloud-netflix-dependencies.version>2.1.1.RELEASE</spring-cloud-netflix-dependencies.version>
         <spring-cloud-openfeign-dependencies.version>2.1.1.RELEASE</spring-cloud-openfeign-dependencies.version>
-        <cloud-dependencies.version>0.0.1-SNAPSHOT</cloud-dependencies.version>
+        <cloud-bom.version>0.0.1-SNAPSHOT</cloud-bom.version>
         <spring-cloud-alibaba-dependencies.version>0.9.0.RELEASE</spring-cloud-alibaba-dependencies.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.springframework</groupId>
-                <artifactId>cloud-dependencies</artifactId>
-                <version>${cloud-dependencies.version}</version>
+                <artifactId>cloud-bom</artifactId>
+                <version>${cloud-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -99,6 +99,7 @@
         <module>nacos-discovery</module>
         <module>cloud-gateway</module>
         <module>cloud-auth</module>
+        <module>cloud-user</module>
         <module>common-modules</module>
     </modules>
     <build>

@@ -1,7 +1,7 @@
 package com.springframework.gateway.service;
 
 import com.springframework.cache.GenericCacheManager;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 
 /**
  * @author summer

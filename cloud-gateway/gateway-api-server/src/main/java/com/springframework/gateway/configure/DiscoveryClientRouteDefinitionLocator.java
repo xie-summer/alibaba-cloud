@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;
 import com.springframework.gateway.common.thread.CloudGatewayThreadFactory;
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import com.springframework.gateway.service.RouteConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

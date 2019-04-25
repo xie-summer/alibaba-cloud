@@ -2,7 +2,7 @@ package com.springframework.gateway.configure;
 
 import com.google.common.collect.Lists;
 import com.springframework.constants.CommonConstant;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;

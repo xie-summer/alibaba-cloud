@@ -1,7 +1,7 @@
 package com.springframework.gateway.domain.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

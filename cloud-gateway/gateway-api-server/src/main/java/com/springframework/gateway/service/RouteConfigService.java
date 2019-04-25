@@ -1,7 +1,7 @@
 package com.springframework.gateway.service;
 
 import com.springframework.gateway.domain.dto.RouteConfigDTO;
-import com.springframework.gateway.domain.entity.RouteConfigDO;
+import com.springframework.gateway.domain.po.RouteConfigDO;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 
 import java.util.List;
