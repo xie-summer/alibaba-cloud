@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,6 +18,7 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * @author summer
@@ -41,25 +43,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder());
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.csrf().disable()
-                .requestMatchers().anyRequest()
-                .and()
-                .authorizeRequests()
-                // 排查认证，/auto/** 路径的拦截，有其他路径，这里添加即可
-                .antMatchers("/login", "/oauth/**").permitAll()
-                .antMatchers("/oauth/**").permitAll()
-                .and().authorizeRequests().anyRequest().authenticated()
-                .and().formLogin().permitAll()
-                .failureUrl("/login-error").successForwardUrl("/index")
-                .and().logout().addLogoutHandler(new SecurityContextLogoutHandler())
-                .logoutSuccessUrl("/index").clearAuthentication(true).permitAll()
-                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .anyRequest().authenticated()
+                .and().httpBasic()
+                .and().csrf().disable();
+    }
+//        http.csrf().disable()
+//                .requestMatchers().anyRequest()
+//                .and()
+//                .authorizeRequests()
+//                // 排查认证，/auto/** 路径的拦截，有其他路径，这里添加即可
+//                .antMatchers("/login", "/oauth/**").permitAll()
+//                .antMatchers("/oauth/**").permitAll()
+//                .and().authorizeRequests().anyRequest().authenticated()
+//                .and().formLogin().permitAll()
+//                .failureUrl("/login-error").successForwardUrl("/index")
+//                .and().logout().addLogoutHandler(new SecurityContextLogoutHandler())
+//                .logoutSuccessUrl("/index").clearAuthentication(true).permitAll()
+//                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 
 
         /*http.csrf().disable().authorizeRequests()
@@ -73,13 +80,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().logout().addLogoutHandler(new SecurityContextLogoutHandler())
                 .logoutSuccessUrl("/index").clearAuthentication(true).permitAll()
                 .and().sessionManagement().maximumSessions(3).expiredUrl("/auto/login");*/
-    }
-
+//    }
 
     @Bean
-    @ConditionalOnMissingBean(value = PasswordEncoder.class)
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    public PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence charSequence) {
+                return charSequence.toString();
+            }
 
+            @Override
+            public boolean matches(CharSequence charSequence, String s) {
+                return Objects.equals(charSequence.toString(), s);
+            }
+        };
+    }
 }

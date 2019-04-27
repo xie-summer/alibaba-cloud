@@ -2,7 +2,6 @@ package com.springframework.swgger.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import springfox.documentation.service.Contact;
 import springfox.documentation.service.VendorExtension;
 
 import java.util.List;

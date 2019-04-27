@@ -23,16 +23,15 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-    private static final String RESOURCE_ID = "*";
 
     @Autowired
     private ResourceServerTokenServices tokenServices;
-    @Value("${security.oauth2.client.resource-ids}")
+    @Value("${security.oauth2.client.resource-ids:*}")
     private String resourceId;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId(RESOURCE_ID).stateless(true).tokenServices(tokenServices);
+        resources.resourceId(resourceId).stateless(true).tokenServices(tokenServices);
     }
 
 
@@ -42,7 +41,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
                 //配置users访问控制，必须认证过后才可以访问
-                .antMatchers("/users/**").authenticated()
                 .antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
                 .and()
                 //认证失败的业务处理

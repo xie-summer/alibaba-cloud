@@ -16,7 +16,6 @@ public interface UserServiceRemote {
      * @return
      */
     @GetMapping(value={"/byName"})
-//    @RequestMapping(value = "/byName",method= RequestMethod.GET)
     @ApiOperation(value = "根据用户名查询用户",notes = "根据用户名查询用户")
     UserVO getByUserName(@RequestParam("username") String username);
 }

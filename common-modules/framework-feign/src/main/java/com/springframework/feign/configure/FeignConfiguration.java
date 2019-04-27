@@ -26,7 +26,6 @@ public class FeignConfiguration  {
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegiste = new FilterRegistrationBean();
         filterRegiste.setOrder(9999);
-        filterRegiste.setAsyncSupported(true);
         filterRegiste.setFilter(originFilter());
         return filterRegiste;
     }

@@ -5,19 +5,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
@@ -26,8 +32,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author summer
@@ -66,7 +73,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Value("${security.oauth2.client.password-client-id}")
     private String passwordClientId;
     /**
-     * 客户端3
+     * 授权码客户端
      */
     @Value("${security.oauth2.client.code-client-id}")
     private String codeClientId;
@@ -96,7 +103,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      * 客户端模式
      */
     @Value("${security.oauth2.client.grant-type-client-credentials}")
-    private String grantType;
+    private String grantTypeClientId;
     @Value("${security.oauth2.client.scope-read}")
     private String scopeRead;
     @Value("${security.oauth2.client.scope-write}")
@@ -111,8 +118,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     /**
      * 指定哪些资源是需要授权验证的
      */
+
     @Value("${security.oauth2.client.resource-ids}")
     private String resourceIds;
+    /**
+     *
+     */
+    @Value("${security.oauth2.client.registeredRedirectUris}")
+    private String registeredRedirectUris;
 
 
     /**
@@ -127,7 +140,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private DataSource dataSource;
 
@@ -136,62 +149,20 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
         LOGGER.info("===============配置授权服务器开始...=========");
         // 用 BCrypt 对密码编码
-        String secret = new BCryptPasswordEncoder().encode(clientSecret);
-//        configurer.jdbc(dataSource)
+        configurer.jdbc(dataSource).passwordEncoder(passwordEncoder);
         //配置3个个客户端,一个用于password认证、一个用于client认证、一个用于authorization_code认证
         // 使用in-memory存储
-        configurer.inMemory()
+        /*configurer.inMemory()
                 .withClient(credentialsClientId)
-                //client_id用来标识客户的Id  客户端1
-                .resourceIds(resourceIds)
-                //允许授权类型   客户端授权模式
-                .authorizedGrantTypes(grantType, refreshToken)
-                //允许授权范围
+                .authorizedGrantTypes(authorizationCode,IMPLICIT,codeClientId, grantTypePassword,refreshToken)
+                .authorities("ROLE_ADMIN")
                 .scopes(scopeRead, scopeWrite)
-                //客户端可以使用的权限
-                .authorities("oauth2")
-                //secret客户端安全码
-                .secret(secret)
-                //token 时间秒
+                .resourceIds(resourceIds)
+                .redirectUris(registeredRedirectUris)
                 .accessTokenValiditySeconds(accessTokenValiditySeconds)
-                //刷新token 时间 秒
                 .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
-
-                .and()
-                //client_id用来标识客户的Id  客户端 2
-                .withClient(passwordClientId)
-                .resourceIds(resourceIds)
-                //允许授权类型  密码授权模式
-                .authorizedGrantTypes(grantTypePassword, refreshToken)
-                //允许授权范围
-                .scopes(scopeRead, scopeWrite)
-                //客户端可以使用的权限
-                .authorities("oauth2")
-                //secret客户端安全码
-                .secret(secret)
-                //token 时间秒
-                .accessTokenValiditySeconds(accessTokenValiditySeconds)
-                //刷新token 时间 秒
-                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
-
-                .and()
-                //client_id用来标识客户的Id  客户端 3
-                .withClient(codeClientId)
-                .resourceIds(resourceIds)
-                //允许授权类型  授权码模式
-                .authorizedGrantTypes(authorizationCode, refreshToken)
-                //允许授权范围
-                .scopes(scopeRead, scopeWrite)
-                //客户端可以使用的权限
-                .authorities("oauth2")
-                //secret客户端安全码
-                .secret(secret)
-                .redirectUris("https://www.baidu.com")
-                //token 时间秒
-                .accessTokenValiditySeconds(accessTokenValiditySeconds)
-                //刷新token 时间 秒
-                .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
-
+                .secret(bCryptPasswordEncoder.encode(clientSecret));
+*/
         LOGGER.info("===============配置授权服务器完成=========");
 
     }
@@ -236,7 +207,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public DefaultAccessTokenConverter accessTokenConverter() {
         DefaultAccessTokenConverter converter = new DefaultAccessTokenConverter();
         converter.setIncludeGrantType(true);
-
         return converter;
     }
 
@@ -258,23 +228,34 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("bcrypt");
-/***
- //			 * 重写增强token方法,用于自定义一些token返回的信息
- //			 */
-//			@Override
-//			public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-//				String userName = authentication.getUserAuthentication().getName();
-//				User user = (User) authentication.getUserAuthentication().getPrincipal();// 与登录时候放进去的UserDetail实现类一直查看link{SecurityConfiguration}
-//				/** 自定义一些token属性 ***/
-//				final Map<String, Object> additionalInformation = new HashMap<>();
-//				additionalInformation.put("userName", userName);
-//				additionalInformation.put("roles", user.getAuthorities());
-//				((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
-//				OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
-//				return enhancedToken;
-//			}
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter() {
+            /**  * 重写增强token方法,用于自定义一些token返回的信息
+             //			 */
+            @Override
+            public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+                String userName = authentication.getUserAuthentication().getName();
+                // 与登录时候放进去的UserDetail实现类一直查看link{SecurityConfiguration}
+                User user = (User) authentication.getUserAuthentication().getPrincipal();
+                /** 自定义一些token属性 ***/
+                final Map<String, Object> additionalInformation = new HashMap<>();
+                additionalInformation.put("user", user);
+                additionalInformation.put("roles", user.getAuthorities());
+                ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
+                return super.enhance(accessToken, authentication);
+            }
+
+            /**
+             //     * 解析token
+             //     * @param value
+             //     * @param map
+             //     * @return
+             //     */
+            @Override
+            public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
+                return super.extractAccessToken(value, map);
+            }
+        };
+//        converter.setSigningKey("bcrypt");
 
         return converter;
     }

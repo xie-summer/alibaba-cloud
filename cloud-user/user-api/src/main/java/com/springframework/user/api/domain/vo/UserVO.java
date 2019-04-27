@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * @author summer
  */
@@ -30,4 +32,6 @@ public class UserVO extends BaseVo {
     private String status;
     @ApiModelProperty("简介")
     private String introduce;
+
+    private List<String> roles;
 }

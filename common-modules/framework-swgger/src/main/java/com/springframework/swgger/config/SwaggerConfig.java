@@ -1,6 +1,7 @@
 package com.springframework.swgger.config;
 
 import io.swagger.annotations.ApiOperation;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,10 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
+        springfox.documentation.service.Contact contact = null;
+        if (swaggerConfigProperties.getContact() != null) {
+            contact = new springfox.documentation.service.Contact(swaggerConfigProperties.getContact().getName(), swaggerConfigProperties.getContact().getUrl(), swaggerConfigProperties.getContact().getEmail());
+        }
         return new ApiInfoBuilder()
                 .title(swaggerConfigProperties.getTitle())
                 .description(swaggerConfigProperties.getDescription())
@@ -33,12 +38,13 @@ public class SwaggerConfig {
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .termsOfServiceUrl(swaggerConfigProperties.getTermsOfServiceUrl())
                 .version(swaggerConfigProperties.getVersion())
-                .contact(swaggerConfigProperties.getContact())
+                .contact(contact)
                 .extensions(swaggerConfigProperties.getVendorExtensions())
                 .build();
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
