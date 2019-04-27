@@ -11,7 +11,7 @@ import static com.google.common.collect.Lists.newArrayList;
 /**
  * @author summer
  */
-@ConfigurationProperties(prefix = "spring.boot.swgger.config.contact")
+@ConfigurationProperties(prefix = "spring.boot.swgger.contact")
 public class SwaggerContactConfigProperties {
 
 
