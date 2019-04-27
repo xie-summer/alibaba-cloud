@@ -11,8 +11,8 @@ import static com.google.common.collect.Lists.newArrayList;
 /**
  * @author summer
  */
-@ConfigurationProperties(prefix = "spring.boot.swgger.config")
-public class SwaggerConfigProperties {
+@ConfigurationProperties(prefix = "spring.boot.swgger.config.contact")
+public class SwaggerContactConfigProperties {
 
 
     /**
@@ -31,6 +31,10 @@ public class SwaggerConfigProperties {
      * url
      */
     private String termsOfServiceUrl = "";
+    /**
+     * 联系人
+     */
+    private Contact contact ;
     /**
      * 扩展
      */
@@ -66,6 +70,14 @@ public class SwaggerConfigProperties {
 
     public void setTermsOfServiceUrl(String termsOfServiceUrl) {
         this.termsOfServiceUrl = termsOfServiceUrl;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     public List<VendorExtension> getVendorExtensions() {
