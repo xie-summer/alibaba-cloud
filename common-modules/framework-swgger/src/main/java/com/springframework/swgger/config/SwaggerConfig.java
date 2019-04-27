@@ -16,15 +16,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@EnableConfigurationProperties(value = {SwaggerConfigProperties.class,SwaggerContactConfigProperties.class})
+@EnableConfigurationProperties(value = {SwaggerConfigProperties.class})
 public class SwaggerConfig {
 
     private final SwaggerConfigProperties swaggerConfigProperties;
-    private final SwaggerContactConfigProperties contactConfigProperties;
 
-    public SwaggerConfig(SwaggerConfigProperties swaggerConfigProperties, SwaggerContactConfigProperties contactConfigProperties) {
+    public SwaggerConfig(SwaggerConfigProperties swaggerConfigProperties) {
         this.swaggerConfigProperties = swaggerConfigProperties;
-        this.contactConfigProperties = contactConfigProperties;
     }
 
     private ApiInfo apiInfo() {
@@ -35,7 +33,7 @@ public class SwaggerConfig {
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .termsOfServiceUrl(swaggerConfigProperties.getTermsOfServiceUrl())
                 .version(swaggerConfigProperties.getVersion())
-                .contact(contactConfigProperties.getContact())
+                .contact(swaggerConfigProperties.getContact())
                 .extensions(swaggerConfigProperties.getVendorExtensions())
                 .build();
     }
