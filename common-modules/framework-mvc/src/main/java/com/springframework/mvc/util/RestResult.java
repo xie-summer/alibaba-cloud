@@ -16,6 +16,7 @@
 package com.springframework.mvc.util;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -40,6 +41,12 @@ public class RestResult<T> implements Serializable {
     public RestResult(int code, String message, T data) {
         this.code = code;
         this.setMessage(message);
+        this.data = data;
+    }
+
+    public RestResult(HttpStatus httpStatus, T data) {
+        this.code = httpStatus.value();
+        this.setMessage(httpStatus.getReasonPhrase());
         this.data = data;
     }
 

@@ -3,6 +3,7 @@ package com.springframework.auth.security.service.impl;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.springframework.auth.remote.UserServiceClient;
+import com.springframework.mvc.util.RestResult;
 import com.springframework.user.api.domain.vo.UserVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserVO user = userServiceClient.getByUserName(username);
-        if (user == null) {
+        RestResult<UserVO> user = userServiceClient.getByUserName(username);
+        if (user.getData() == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user));
+        return new org.springframework.security.core.userdetails.User(user.getData().getUsername(), user.getData().getPassword(), getAuthority(user.getData()));
     }
 
     private Collection<? extends GrantedAuthority> getAuthority(UserVO user) {

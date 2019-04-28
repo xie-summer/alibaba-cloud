@@ -1,6 +1,7 @@
 package com.springframework.user.api.impl;
 
 import com.springframework.feign.annotation.OriginService;
+import com.springframework.mvc.util.RestResult;
 import com.springframework.user.api.UserServiceRemote;
 import com.springframework.user.api.domain.dto.UserDTO;
 import com.springframework.user.api.domain.vo.UserVO;
@@ -10,6 +11,7 @@ import com.springframework.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +39,7 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
      */
     @Override
     @OriginService(names = {"auth-server"})
-    public UserVO getByUserName(@RequestParam("username") String username) {
+    public RestResult<UserVO> getByUserName(@RequestParam("username") String username) {
         if (StringUtils.isEmpty(username)) {
             return null;
         }
@@ -47,7 +49,7 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
             UserVO userVO = new UserVO();
             BeanUtils.copyProperties(byUserName, userVO);
             userVO.setRoles(roles.stream().map(RoleDO::getRole).collect(Collectors.toList()));
-            return userVO;
+            return new RestResult<>(HttpStatus.OK, userVO);
         }
         return null;
     }

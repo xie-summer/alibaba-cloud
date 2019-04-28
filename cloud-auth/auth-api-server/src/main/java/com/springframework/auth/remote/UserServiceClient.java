@@ -1,5 +1,6 @@
 package com.springframework.auth.remote;
 
+import com.springframework.mvc.util.RestResult;
 import com.springframework.user.api.UserServiceRemote;
 import com.springframework.user.api.domain.vo.UserVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,7 +16,7 @@ public interface UserServiceClient extends UserServiceRemote {
          * @return
          */
         @Override
-        public UserVO getByUserName(String username) {
+        public RestResult<UserVO> getByUserName(String username) {
             throw new RuntimeException("no fallback method");
         }
     }
