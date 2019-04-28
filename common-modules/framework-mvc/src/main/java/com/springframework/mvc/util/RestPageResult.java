@@ -23,7 +23,7 @@ import java.io.Serializable;
  * rest page result
  *
  * @param <T> data type
- * @author Nacos
+ * @author summer
  */
 @Data
 public class RestPageResult<T> implements Serializable {
