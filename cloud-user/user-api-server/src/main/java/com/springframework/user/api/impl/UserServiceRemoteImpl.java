@@ -36,7 +36,7 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
      * @return
      */
     @Override
-    @OriginService(names={"auth-server"})
+    @OriginService(names = {"auth-server"})
     public UserVO getByUserName(@RequestParam("username") String username) {
         if (StringUtils.isEmpty(username)) {
             return null;

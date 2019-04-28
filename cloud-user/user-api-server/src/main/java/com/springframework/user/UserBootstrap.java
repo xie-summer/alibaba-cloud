@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableFeignClients
 @Slf4j
 public class UserBootstrap {
-
     public static void main(String[] args) {
         SpringApplication.run(UserBootstrap.class, args);
         log.warn("User 用户服务 started success");

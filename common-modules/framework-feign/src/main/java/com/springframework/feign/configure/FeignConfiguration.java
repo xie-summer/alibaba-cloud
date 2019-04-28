@@ -1,10 +1,7 @@
 package com.springframework.feign.configure;
 
-import com.springframework.feign.filter.OriginFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,16 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class FeignConfiguration  {
 
     @Bean
-    @ConditionalOnMissingBean(OriginFilter.class)
-    public OriginFilter originFilter() {
-        return new OriginFilter();
-    }
-
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegiste = new FilterRegistrationBean();
-        filterRegiste.setOrder(9999);
-        filterRegiste.setFilter(originFilter());
-        return filterRegiste;
+    @ConditionalOnMissingBean(OriginServiceAspect.class)
+    public OriginServiceAspect originServiceAspect(){
+        return new OriginServiceAspectImpl();
     }
 }

@@ -15,21 +15,17 @@
 
     <dependencies>
         <!--内部框架-->
-<!--        <dependency>-->
-<!--            <groupId>com.springframework</groupId>-->
-<!--            <artifactId>framework-hystrix</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.springframework</groupId>-->
-<!--            <artifactId>framework-security</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.springframework</groupId>-->
-<!--            <artifactId>framework-trace</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-exception</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

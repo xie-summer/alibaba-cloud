@@ -26,6 +26,7 @@
         <module>framework-redis</module>
         <module>framework-mvc</module>
         <module>framework-swgger</module>
+        <module>framework-exception</module>
     </modules>
 
     <dependencies>
