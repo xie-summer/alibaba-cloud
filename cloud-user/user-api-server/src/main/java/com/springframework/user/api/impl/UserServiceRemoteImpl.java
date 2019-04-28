@@ -41,7 +41,7 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
     @OriginService(names = {"auth-server"})
     public RestResult<UserVO> getByUserName(@RequestParam("username") String username) {
         if (StringUtils.isEmpty(username)) {
-            return null;
+            return new RestResult<>(HttpStatus.OK, null);
         }
         UserDO byUserName = userService.getByUserName(username);
         List<RoleDO> roles = userService.getRolesByUserName(username);
@@ -51,6 +51,6 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
             userVO.setRoles(roles.stream().map(RoleDO::getRole).collect(Collectors.toList()));
             return new RestResult<>(HttpStatus.OK, userVO);
         }
-        return null;
+        return new RestResult<>(HttpStatus.OK, null);
     }
 }
