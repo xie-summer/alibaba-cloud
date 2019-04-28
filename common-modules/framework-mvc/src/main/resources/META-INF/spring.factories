@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.springframework.mvc.aop.LimitInterceptor,\
   com.springframework.mvc.config.LocalDateTimeSerializerAutoConfig
