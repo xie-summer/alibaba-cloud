@@ -15,7 +15,7 @@ public class FeignConfiguration  {
 
     @Bean
     @ConditionalOnMissingBean(OriginServiceAspect.class)
-    public OriginServiceAspect originServiceAspect(){
+    public OriginServiceAspectImpl originServiceAspect(){
         return new OriginServiceAspectImpl();
     }
 }

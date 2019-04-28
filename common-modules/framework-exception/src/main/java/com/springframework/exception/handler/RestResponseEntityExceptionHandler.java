@@ -20,15 +20,21 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDeniedException(Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>("Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
+
     @ExceptionHandler({AuthorizedException.class})
     public ResponseEntity<Object> handleAuthorizedException(Exception ex, WebRequest request) {
-        return new ResponseEntity<Object>("Unauthorized", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("Unauthorized", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> handleUnKnowException(Exception ex, WebRequest request) {
+        return new ResponseEntity<>("INTERNAL_SERVER_ERROR", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex,WebRequest request) {
+    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "This should be application specific";
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(),
                 HttpStatus.CONFLICT, request);

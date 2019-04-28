@@ -7,6 +7,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -34,12 +37,14 @@ public class OriginServiceAspectImpl implements OriginServiceAspect {
         OriginService originService = signature.getMethod().getAnnotation(OriginService.class);
         if (originService != null) {
             String[] names = originService.names();
-            Object[] args = joinPoint.getArgs();
-            HttpServletRequest requests = (HttpServletRequest) args[0];
-            String originServiceHeader = requests.getHeader(X_FEIGNORIGIN_HEADER);
-            boolean authenticate = Arrays.stream(names).anyMatch(one -> one.equalsIgnoreCase(originServiceHeader));
-            if (authenticate) {
-                return joinPoint.proceed();
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attributes != null) {
+                HttpServletRequest request = attributes.getRequest();
+                String originServiceHeader = request.getHeader(X_FEIGNORIGIN_HEADER);
+                boolean authenticate = Arrays.stream(names).anyMatch(one -> one.equalsIgnoreCase(originServiceHeader));
+                if (authenticate) {
+                    return joinPoint.proceed();
+                }
             }
         }
         throw new AuthorizedException();

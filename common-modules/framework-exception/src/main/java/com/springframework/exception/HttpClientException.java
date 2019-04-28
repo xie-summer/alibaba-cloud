@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HttpClientException extends BaseException{
     @Override
-    public BaseException get() {
+    public HttpClientException get() {
         return this;
     }
 }

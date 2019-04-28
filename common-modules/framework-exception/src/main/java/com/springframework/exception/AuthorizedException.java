@@ -6,7 +6,7 @@ package com.springframework.exception;
  */
 public class AuthorizedException extends BaseKnownException{
     @Override
-    public BaseException get() {
+    public AuthorizedException get() {
         return this;
     }
 }

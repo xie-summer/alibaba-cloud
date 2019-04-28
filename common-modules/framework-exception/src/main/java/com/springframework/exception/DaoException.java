@@ -15,7 +15,7 @@ public class DaoException extends BaseException {
     }
 
     @Override
-    public BaseException get() {
+    public DaoException get() {
         return this;
     }
 }

@@ -12,7 +12,7 @@ public class InvalidParamException extends BaseException {
 
 
     @Override
-    public BaseException get() {
+    public InvalidParamException get() {
         return this;
     }
 }
