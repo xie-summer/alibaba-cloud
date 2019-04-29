@@ -229,8 +229,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter() {
-            /**  * 重写增强token方法,用于自定义一些token返回的信息
-             //			 */
+            /** 重写增强token方法,用于自定义一些token返回的信息
+             */
             @Override
             public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
                 String userName = authentication.getUserAuthentication().getName();
@@ -245,18 +245,17 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
             }
 
             /**
-             //     * 解析token
-             //     * @param value
-             //     * @param map
-             //     * @return
-             //     */
+             * 解析token
+             * @param value
+             * @param map
+             * @return
+             */
             @Override
             public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
                 return super.extractAccessToken(value, map);
             }
         };
-//        converter.setSigningKey("bcrypt");
-
+        converter.setSigningKey("bcrypt");
         return converter;
     }
 

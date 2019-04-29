@@ -157,7 +157,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
         return this.routeDefinitionLocator.getRouteDefinitions()
                 .filter(route -> route.getId().equals(id))
                 .singleOrEmpty()
-                .map(route -> ResponseEntity.ok(route))
+                .map(ResponseEntity::ok)
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
