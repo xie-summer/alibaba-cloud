@@ -109,14 +109,12 @@ common-modules/framework-redis/target/
 logs/
 cloud-auth/auth-api-server/target/
 cloud-user/user-api/target/generated-sources/
-common-modules/framework-domain/src/
 common-modules/framework-exception/target/apidocs/
 common-modules/framework-exception/target/classes/META-INF/
 common-modules/framework-exception/target/generated-sources/
 common-modules/framework-exception/target/javadoc-bundle-options/
 common-modules/framework-exception/target/maven-archiver/
 common-modules/framework-exception/target/maven-status/
-common-modules/framework-mvc/src/main/java/com/springframework/mvc/util/
 common-modules/framework-mvc/target/apidocs/
 common-modules/framework-mvc/target/classes/META-INF/
 common-modules/framework-mvc/target/generated-sources/
@@ -129,5 +127,4 @@ common-modules/framework-swgger/target/generated-sources/
 common-modules/framework-swgger/target/javadoc-bundle-options/
 common-modules/framework-swgger/target/maven-archiver/
 common-modules/framework-swgger/target/maven-status/
-nacos-discovery/src/
-target/
+**/target/
