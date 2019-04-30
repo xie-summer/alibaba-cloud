@@ -1,6 +1,6 @@
 package com.springframework.auth.remote;
 
-import com.springframework.mvc.util.RestResult;
+import com.springframework.domain.base.RestResult;
 import com.springframework.user.api.UserServiceRemote;
 import com.springframework.user.api.domain.vo.UserVO;
 import org.springframework.cloud.openfeign.FeignClient;

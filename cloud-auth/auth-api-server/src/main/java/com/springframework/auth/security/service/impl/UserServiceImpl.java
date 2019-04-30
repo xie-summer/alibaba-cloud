@@ -1,15 +1,13 @@
 package com.springframework.auth.security.service.impl;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.springframework.auth.remote.UserServiceClient;
-import com.springframework.mvc.util.RestResult;
+import com.springframework.domain.base.RestResult;
 import com.springframework.user.api.domain.vo.UserVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**

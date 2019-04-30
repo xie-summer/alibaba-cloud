@@ -17,7 +17,7 @@ package com.springframework.auth.controller;
 
 import com.springframework.auth.security.OAuthRequestedMatcher;
 import com.springframework.auth.util.JwtTokenUtils;
-import com.springframework.mvc.util.RestResult;
+import com.springframework.domain.base.RestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
