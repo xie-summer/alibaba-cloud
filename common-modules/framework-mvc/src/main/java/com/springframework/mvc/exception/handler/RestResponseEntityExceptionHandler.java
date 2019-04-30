@@ -1,11 +1,11 @@
-package com.springframework.exception.handler;
+package com.springframework.mvc.exception.handler;
 
 import com.springframework.exception.AuthorizedException;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -18,6 +18,7 @@ import java.nio.file.AccessDeniedException;
  * 2018/8/27
  */
 @Configuration
+@AutoConfigureOrder(-2147483639)
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 

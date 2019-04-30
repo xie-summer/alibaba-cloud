@@ -18,11 +18,11 @@
         <!--内部框架-->
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>framework-enum</artifactId>
+            <artifactId>auth-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>auth-api</artifactId>
+            <artifactId>framework-enum</artifactId>
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
@@ -31,6 +31,10 @@
         <dependency>
             <groupId>com.springframework</groupId>
             <artifactId>framework-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>

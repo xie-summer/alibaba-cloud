@@ -23,6 +23,10 @@
                     <artifactId>framework-mvc</artifactId>
                     <groupId>com.springframework</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>framework-swgger</artifactId>
+                    <groupId>com.springframework</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!--内部框架-->
@@ -50,14 +54,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
