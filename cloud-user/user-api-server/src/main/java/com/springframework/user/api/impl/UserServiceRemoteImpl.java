@@ -1,9 +1,9 @@
 package com.springframework.user.api.impl;
 
+import com.springframework.enums.http.HttpStatus;
 import com.springframework.feign.annotation.OriginService;
-import com.springframework.mvc.util.RestResult;
+import com.springframework.domain.base.RestResult;
 import com.springframework.user.api.UserServiceRemote;
-import com.springframework.user.api.domain.dto.UserDTO;
 import com.springframework.user.api.domain.vo.UserVO;
 import com.springframework.user.domain.po.RoleDO;
 import com.springframework.user.domain.po.UserDO;
@@ -11,7 +11,6 @@ import com.springframework.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
