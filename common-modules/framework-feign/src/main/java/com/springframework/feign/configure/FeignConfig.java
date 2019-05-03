@@ -37,9 +37,9 @@ public class FeignConfig implements RequestInterceptor {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String X_FEIGNORIGIN_HEADER = "X-FeignOrigin";
     public static final String X_REQUEST_FEATURE_HEADER = "X-RequestFeature";
-    @Autowired
+    @Autowired(required = false)
     private ILoadBalancer loadBalancer;
-    @Autowired
+    @Autowired(required = false)
     private DiscoveryClient discoveryClient;
 
     private final static IRule DEFAULT_RULE = new RoundRobinRule();
@@ -82,17 +82,21 @@ public class FeignConfig implements RequestInterceptor {
 //        log.info(" 开始Feign远程调用 : " + requestTemplate.method() + " 消息模型 : rootId = " + rootId + " parentId = " + parentId + " childId = " + childId);
         if (StringUtils.hasText(requestFeature)) {
             requestTemplate.header(X_FEIGNORIGIN_HEADER, clientServiceId);
+            if (loadBalancer == null) {
+                log.warn("no load balancer");
+                return;
+            }
             if (loadBalancer instanceof ZoneAwareLoadBalancer) {
                 rule = ((ZoneAwareLoadBalancer) loadBalancer).getRule();
-                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient,rule, requestFeature, loadBalancer);
+                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient, rule, requestFeature, loadBalancer);
                 ((ZoneAwareLoadBalancer) loadBalancer).setRule(grayscaleRule);
             } else if (loadBalancer instanceof DynamicServerListLoadBalancer) {
                 rule = ((DynamicServerListLoadBalancer) loadBalancer).getRule();
-                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient,rule, requestFeature, loadBalancer);
+                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient, rule, requestFeature, loadBalancer);
                 ((DynamicServerListLoadBalancer) loadBalancer).setRule(grayscaleRule);
             } else if (loadBalancer instanceof BaseLoadBalancer) {
                 rule = ((BaseLoadBalancer) loadBalancer).getRule();
-                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient,rule, requestFeature, loadBalancer);
+                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient, rule, requestFeature, loadBalancer);
                 ((BaseLoadBalancer) loadBalancer).setRule(grayscaleRule);
             }
         }

@@ -40,6 +40,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
+                .antMatchers("/v2/api-docs","/login", "/oauth/**", "/swagger-ui.html", "/webjars/**").permitAll()
                 //配置users访问控制，必须认证过后才可以访问
                 .antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
                 .and()
@@ -52,6 +53,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 //退出成功的业务处理
                 .logoutSuccessHandler(customLogoutSuccessHandler());
     }
+
     @Bean
     @ConditionalOnMissingBean
     public LogoutSuccessHandler customLogoutSuccessHandler() {

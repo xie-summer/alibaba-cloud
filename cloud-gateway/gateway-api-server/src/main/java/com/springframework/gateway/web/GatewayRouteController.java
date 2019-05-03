@@ -1,5 +1,7 @@
 package com.springframework.gateway.web;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -27,6 +29,8 @@ import java.util.Map;
  * 2018/7/4
  */
 @RestController
+
+@Api(value = "网关接口",tags = "网关接口")
 @RequestMapping("/gateway")
 @Slf4j
 public class GatewayRouteController implements ApplicationEventPublisherAware {
@@ -55,17 +59,20 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     // TODO: Add uncommited or new but not active routes endpoint
 
     @PostMapping("/refresh")
+    @ApiOperation(value = "刷新路由",notes = "刷新路由")
     public Mono<String> refresh() {
         this.publisher.publishEvent(new RefreshRoutesEvent(this));
         return Mono.just("刷新成功");
     }
 
     @GetMapping("/globalfilters")
+    @ApiOperation(value = "查找所有global路由过滤器",notes = "查找所有global路由过滤器")
     public Mono<HashMap<String, Object>> globalfilters() {
         return getNamesToOrders(this.globalFilters);
     }
 
     @GetMapping("/routefilters")
+    @ApiOperation(value = "查找所有路由过滤器",notes = "查找所有路由过滤器")
     public Mono<HashMap<String, Object>> routefilers() {
         return getNamesToOrders(this.gatewayFilters);
     }
@@ -86,6 +93,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
 
     // TODO: Flush out routes without a definition
     @GetMapping("/routes")
+    @ApiOperation(value = "获取路由列表",notes = "获取路由列表")
     public Mono<List<Map<String, Object>>> routes() {
         Mono<Map<String, RouteDefinition>> routeDefs = this.routeDefinitionLocator.getRouteDefinitions()
                 .collectMap(RouteDefinition::getId);
@@ -131,6 +139,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     http POST :8080/admin/gateway/routes/apiaddreqhead uri=http://httpbin.org:80 predicates:='["Host=**.apiaddrequestheader.org", "Path=/headers"]' filters:='["AddRequestHeader=X-Request-ApiFoo, ApiBar"]'
     */
     @PostMapping("/routes/{id}")
+    @ApiOperation(value = "根据serviceID添加路由",notes = "根据serviceID添加路由")
     @SuppressWarnings("unchecked")
     public Mono<ResponseEntity<Void>> save(@PathVariable String id, @RequestBody Mono<RouteDefinition> route) {
         return this.routeDefinitionWriter.save(route.map(r -> {
@@ -145,6 +154,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     }
 
     @DeleteMapping("/routes/{id}")
+    @ApiOperation(value = "根据路由ID删除指定路由",notes = "根据路由ID删除指定路由")
     public Mono<ResponseEntity<Object>> delete(@PathVariable String id) {
         return this.routeDefinitionWriter.delete(Mono.just(id))
                 .then(Mono.defer(() -> Mono.just(ResponseEntity.ok().build())))
@@ -152,6 +162,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     }
 
     @GetMapping("/routes/{id}")
+    @ApiOperation(value = "根据路由ID查找路由详情",notes = "根据路由ID查找路由详情")
     public Mono<ResponseEntity<RouteDefinition>> route(@PathVariable String id) {
         //TODO: missing RouteLocator
         return this.routeDefinitionLocator.getRouteDefinitions()
@@ -162,6 +173,7 @@ public class GatewayRouteController implements ApplicationEventPublisherAware {
     }
 
     @GetMapping("/routes/{id}/combinedfilters")
+    @ApiOperation(value = "根据路由ID指定路由过滤器",notes = "根据路由ID指定路由过滤器")
     public Mono<HashMap<String, Object>> combinedfilters(@PathVariable String id) {
         //TODO: missing global filters
         return this.routeLocator.getRoutes()

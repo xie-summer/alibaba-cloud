@@ -37,7 +37,7 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
      * @return
      */
     @Override
-    @OriginService(names = {"auth-server"})
+//    @OriginService(names = {"auth-server"}) //权限拦截
     public RestResult<UserVO> getByUserName(@RequestParam("username") String username) {
         if (StringUtils.isEmpty(username)) {
             return new RestResult<>(HttpStatus.OK, null);

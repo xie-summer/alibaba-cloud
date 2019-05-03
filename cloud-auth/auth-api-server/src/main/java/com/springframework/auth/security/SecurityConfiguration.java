@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 /**
  * @author summer
@@ -42,27 +43,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .anyRequest().authenticated()
-                .and().httpBasic()
-                .and().csrf().disable();
+//        http.authorizeRequests()
+//                .antMatchers(HttpMethod.OPTIONS).permitAll()
+//                .anyRequest().authenticated()
+//                .and().httpBasic()
+//                .and().csrf().disable();
+        http.csrf().disable()
+                .requestMatchers().anyRequest()
+                .and()
+                .authorizeRequests()
+                // 排查认证，/auto/** 路径的拦截，有其他路径，这里添加即可
+                .antMatchers("/login", "/oauth/**", "/swagger-ui.html", "/webjars/**","/v2/api-docs").permitAll()
+                .and().authorizeRequests().anyRequest().authenticated()
+                .and().formLogin().permitAll()
+                .failureUrl("/login-error").successForwardUrl("/index")
+                .and().logout().addLogoutHandler(new SecurityContextLogoutHandler())
+                .logoutSuccessUrl("/index").clearAuthentication(true).permitAll()
+                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
+                .and().sessionManagement().maximumSessions(3).expiredUrl("/auto/login");
+
     }
-//        http.csrf().disable()
-//                .requestMatchers().anyRequest()
-//                .and()
-//                .authorizeRequests()
-//                // 排查认证，/auto/** 路径的拦截，有其他路径，这里添加即可
-//                .antMatchers("/login", "/oauth/**").permitAll()
-//                .antMatchers("/oauth/**").permitAll()
-//                .and().authorizeRequests().anyRequest().authenticated()
-//                .and().formLogin().permitAll()
-//                .failureUrl("/login-error").successForwardUrl("/index")
-//                .and().logout().addLogoutHandler(new SecurityContextLogoutHandler())
-//                .logoutSuccessUrl("/index").clearAuthentication(true).permitAll()
-//                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
-
-
         /*http.csrf().disable().authorizeRequests()
                 // 排除登陆 /auto/login 路径的拦截
                 .antMatchers("/auto/login", "/oauth/**").permitAll()

@@ -1,11 +1,11 @@
 package com.springframework.gateway.configure.swagger;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import springfox.documentation.swagger.web.*;
@@ -17,6 +17,7 @@ import java.util.Optional;
  * 2019/4/29
  */
 @RestController
+@Slf4j
 @Primary
 public class SwaggerHandler {
     @Autowired(required = false)
@@ -38,13 +39,8 @@ public class SwaggerHandler {
                 Optional.ofNullable(uiConfiguration).orElse(UiConfigurationBuilder.builder().build()), HttpStatus.OK));
     }
 
-    @GetMapping("/swagger-resources")
+    @GetMapping(value = {"/swagger-resources"})
     public Mono<ResponseEntity> swaggerResources() {
-        return Mono.just((new ResponseEntity<>(swaggerResources.get(), HttpStatus.OK)));
-    }
-
-    @GetMapping("/api-docs")
-    public Mono<ResponseEntity> swaggerApiDocs() {
         return Mono.just((new ResponseEntity<>(swaggerResources.get(), HttpStatus.OK)));
     }
 
