@@ -1,4 +1,4 @@
-package com.springframework.gateway.configure;
+package com.springframework.gateway.configure.gateway;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;

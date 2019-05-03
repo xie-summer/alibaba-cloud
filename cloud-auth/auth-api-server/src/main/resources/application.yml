@@ -1,127 +1,127 @@
-info.version: @project.version@
-server:
-  port: 8086
-spring:
-  application:
-    name: gateway-server
-  #http基础认证
-  security:
-    user:
-      name: admin
-      password: admin
-  redis:
-    database: 1
-    host: 127.0.0.1
-    port: 6379
-    jedis:
-      pool:
-        #最大连接数据库连接数,设 0 为没有限制
-        max-active: 8
-        #最大等待连接中的数量,设 0 为没有限制
-        max-idle: 8
-        #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
-        max-wait: -1ms
-        #最小等待连接中的数量,设 0 为没有限制
-        min-idle: 0
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        max-wait: -1ms
-        min-idle: 0
-      shutdown-timeout: 100ms
-    redisson:
-      config: classpath:redisson.yml
-
-  # datasource
-  autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
-  datasource:
-    druid:
-      stat-view-servlet:
-        loginUsername: admin
-        loginPassword: 123456
-    dynamic:
-      primary: mysql
-      druid:
-        min-idle: 2
-        max-pool-prepared-statement-per-connection-size: 100
-        validation-query-timeout: -1
-        test-while-idle: true
-        time-between-eviction-runs-millis: 0
-        max-active: 20
-        share-prepared-statements: true
-        validation-query: select 1
-        filters: stat,wall
-        max-wait: -1
-        test-on-borrow: false
-        pool-prepared-statements: true
-        initial-size: 0
-        test-on-return: false
-      datasource:
-        mysql:
-          username: root
-          password: 123
-          type: com.alibaba.druid.pool.DruidDataSource
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/cloud?autoReconnect=true&amp;characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true
-mybatis-plus:
-  executor-type: REUSE
-  configuration:
-    aggressive-lazy-loading: true
-    cacheEnabled: true
-    defaultStatementTimeout: 25000
-    multipleResultSetsEnabled: true
-    useColumnLabel: true
-    auto-mapping-behavior: full
-    auto-mapping-unknown-column-behavior: WARNING
-    map-underscore-to-camel-case: true
-    defaultExecutorType: REUSE
-    useGeneratedKeys: true
-    lazyLoadingEnabled: true
-    call-setters-on-nulls: false
-  type-aliases-super-type: java.lang.Object
-  mapper-locations: classpath:mapper/*.xml
-  global-config:
-    #    refresh: true
-    sql-parser-cache: false
-    db-config:
-      logic-not-delete-value: 0
-      table-underline: true
-      field-strategy: not_empty
-      capital-mode: false
-      db-type: mysql
-      logic-delete-value: 1
-      column-like: false
-      table-prefix: t_
-      id-type: AUTO
-  type-aliases-package: com.**.domain.po
-  check-config-location: false
-
-# 授权模式
-security:
-  oauth2:
-    client:
-      credentials-client-id: 5ad953bf-5da4-4008-b519-16de233d52c8
-      password-client-id: afea9402-e79b-4aca-83d3-96d3d789c8e3
-      code-client-id: e35e736b-5db1-4b22-af2c-a658248cc74f
-      client-secret: 4ad25ec5-dfaa-4958-be1a-d89757c28f5a
-      access-token-validity-seconds: 2592000
-      refresh-token-validity-seconds: 2678400
-      #      grant-type-client-credentials:
-      #      grant-type-password: "password"
-      refresh-token: "refresh_token"
-      resource-ids: "*"
-      scope: "read","write"
-      authorized-grant-types: "authorization_code","client_credentials","password"
-# boot 监控
-management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-logging:
-  config: classpath:logback.xml
+#info.version: @project.version@
+#server:
+#  port: 8086
+#spring:
+#  application:
+#    name: gateway-server
+#  #http基础认证
+#  security:
+#    user:
+#      name: admin
+#      password: admin
+#  redis:
+#    database: 1
+#    host: 127.0.0.1
+#    port: 6379
+#    jedis:
+#      pool:
+#        #最大连接数据库连接数,设 0 为没有限制
+#        max-active: 8
+#        #最大等待连接中的数量,设 0 为没有限制
+#        max-idle: 8
+#        #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+#        max-wait: -1ms
+#        #最小等待连接中的数量,设 0 为没有限制
+#        min-idle: 0
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        max-wait: -1ms
+#        min-idle: 0
+#      shutdown-timeout: 100ms
+#    redisson:
+#      config: classpath:redisson.yml
+#
+#  # datasource
+#  autoconfigure:
+#    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+#  datasource:
+#    druid:
+#      stat-view-servlet:
+#        loginUsername: admin
+#        loginPassword: 123456
+#    dynamic:
+#      primary: mysql
+#      druid:
+#        min-idle: 2
+#        max-pool-prepared-statement-per-connection-size: 100
+#        validation-query-timeout: -1
+#        test-while-idle: true
+#        time-between-eviction-runs-millis: 0
+#        max-active: 20
+#        share-prepared-statements: true
+#        validation-query: select 1
+#        filters: stat,wall
+#        max-wait: -1
+#        test-on-borrow: false
+#        pool-prepared-statements: true
+#        initial-size: 0
+#        test-on-return: false
+#      datasource:
+#        mysql:
+#          username: root
+#          password: 123
+#          type: com.alibaba.druid.pool.DruidDataSource
+#          driver-class-name: com.mysql.jdbc.Driver
+#          url: jdbc:mysql://127.0.0.1:3306/cloud?autoReconnect=true&amp;characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true
+#mybatis-plus:
+#  executor-type: REUSE
+#  configuration:
+#    aggressive-lazy-loading: true
+#    cacheEnabled: true
+#    defaultStatementTimeout: 25000
+#    multipleResultSetsEnabled: true
+#    useColumnLabel: true
+#    auto-mapping-behavior: full
+#    auto-mapping-unknown-column-behavior: WARNING
+#    map-underscore-to-camel-case: true
+#    defaultExecutorType: REUSE
+#    useGeneratedKeys: true
+#    lazyLoadingEnabled: true
+#    call-setters-on-nulls: false
+#  type-aliases-super-type: java.lang.Object
+#  mapper-locations: classpath:mapper/*.xml
+#  global-config:
+#    #    refresh: true
+#    sql-parser-cache: false
+#    db-config:
+#      logic-not-delete-value: 0
+#      table-underline: true
+#      field-strategy: not_empty
+#      capital-mode: false
+#      db-type: mysql
+#      logic-delete-value: 1
+#      column-like: false
+#      table-prefix: t_
+#      id-type: AUTO
+#  type-aliases-package: com.**.domain.po
+#  check-config-location: false
+#
+## 授权模式
+#security:
+#  oauth2:
+#    client:
+#      credentials-client-id: 5ad953bf-5da4-4008-b519-16de233d52c8
+#      password-client-id: afea9402-e79b-4aca-83d3-96d3d789c8e3
+#      code-client-id: e35e736b-5db1-4b22-af2c-a658248cc74f
+#      client-secret: 4ad25ec5-dfaa-4958-be1a-d89757c28f5a
+#      access-token-validity-seconds: 2592000
+#      refresh-token-validity-seconds: 2678400
+#      #      grant-type-client-credentials:
+#      #      grant-type-password: "password"
+#      refresh-token: "refresh_token"
+#      resource-ids: "*"
+#      scope: "read","write"
+#      authorized-grant-types: "authorization_code","client_credentials","password"
+## boot 监控
+#management:
+#  endpoint:
+#    health:
+#      show-details: always
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#logging:
+#  config: classpath:logback.xml

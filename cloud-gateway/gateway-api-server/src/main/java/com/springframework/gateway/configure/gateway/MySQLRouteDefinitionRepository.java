@@ -1,4 +1,4 @@
-package com.springframework.gateway.configure;
+package com.springframework.gateway.configure.gateway;
 
 import com.google.common.collect.Lists;
 import com.springframework.gateway.service.RouteConfigService;

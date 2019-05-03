@@ -1,4 +1,4 @@
-package com.springframework.gateway.configure;
+package com.springframework.gateway.configure.gateway;
 
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;

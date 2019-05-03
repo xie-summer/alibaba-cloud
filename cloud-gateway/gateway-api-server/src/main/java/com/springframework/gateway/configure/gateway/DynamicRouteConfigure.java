@@ -1,4 +1,4 @@
-package com.springframework.gateway.configure;
+package com.springframework.gateway.configure.gateway;
 
 import com.springframework.gateway.service.RouteConfigService;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
