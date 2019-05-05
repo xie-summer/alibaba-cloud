@@ -37,15 +37,15 @@ public class FeignConfig implements RequestInterceptor {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String X_FEIGNORIGIN_HEADER = "X-FeignOrigin";
     public static final String X_REQUEST_FEATURE_HEADER = "X-RequestFeature";
-    @Autowired(required = false)
     private ILoadBalancer loadBalancer;
-    @Autowired(required = false)
     private DiscoveryClient discoveryClient;
 
     private final static IRule DEFAULT_RULE = new RoundRobinRule();
     protected IRule rule = DEFAULT_RULE;
 
-    public FeignConfig() {
+    public FeignConfig(ILoadBalancer loadBalancer, DiscoveryClient discoveryClient) {
+        this.loadBalancer = loadBalancer;
+        this.discoveryClient = discoveryClient;
     }
 
     @Override

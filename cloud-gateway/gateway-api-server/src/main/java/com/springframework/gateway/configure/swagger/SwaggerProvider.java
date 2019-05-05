@@ -14,8 +14,6 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sun.tools.internal.xjc.reader.Ring.add;
-
 /**
  * @author summer
  * 2019/4/29
@@ -25,6 +23,7 @@ import static com.sun.tools.internal.xjc.reader.Ring.add;
 @AllArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider {
     public static final String API_URI = "/v2/api-docs";
+    public static final String GATEWAY_SERVER_URI = "gateway-server";
     private final RouteLocator routeLocator;
     private final DiscoveryClientRouteDefinitionLocator discoveryClientRouteDefinitionLocator;
     private final GatewayProperties gatewayProperties;
@@ -45,6 +44,10 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
                         .forEach(predicateDefinition -> resources.add(swaggerResource(routeDefinition.getId(),
                                 predicateDefinition.getArgs().get("pattern")
                                         .replace("/**", API_URI)))));
+        //过滤gateway
+        if (resources.size() > 1) {
+            resources.removeIf(one -> GATEWAY_SERVER_URI.equalsIgnoreCase(one.getName()));
+        }
         return resources;
     }
 
