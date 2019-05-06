@@ -1,6 +1,6 @@
-package com.springframework.gateway.remote.fallback;
+package com.springframework.sso.remote.fallback;
 
-import com.springframework.gateway.remote.SecurityAuthServiceRemoteClient;
+import com.springframework.sso.remote.SecurityAuthServiceRemoteClient;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 

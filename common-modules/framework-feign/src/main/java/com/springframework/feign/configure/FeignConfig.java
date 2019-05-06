@@ -52,7 +52,7 @@ public class FeignConfig implements RequestInterceptor {
     public void apply(RequestTemplate requestTemplate) {
         log.info(" 开始Feign远程调用 : " + requestTemplate.method());
         //添加 X-FeignOrigin
-        if (StringUtils.hasText(clientServiceId)) {
+        if (!StringUtils.hasText(clientServiceId)) {
             log.warn("this service application config not set  [spring.application.name] ");
         } else {
             requestTemplate.header(X_FEIGNORIGIN_HEADER, clientServiceId);

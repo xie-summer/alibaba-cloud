@@ -1,12 +1,10 @@
 package com.springframework.auth.domain.dao.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.springframework.auth.domain.dao.OauthAccessTokenDao;
 import com.springframework.auth.domain.mapper.OauthAccessTokenMapper;
 import com.springframework.auth.domain.po.OauthAccessTokenDO;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>

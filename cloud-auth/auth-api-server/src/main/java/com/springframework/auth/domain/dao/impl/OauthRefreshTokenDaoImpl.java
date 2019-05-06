@@ -5,7 +5,6 @@ import com.springframework.auth.domain.dao.OauthRefreshTokenDao;
 import com.springframework.auth.domain.mapper.OauthRefreshTokenMapper;
 import com.springframework.auth.domain.po.OauthRefreshTokenDO;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>

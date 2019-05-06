@@ -7,6 +7,8 @@ import com.springframework.auth.domain.po.OauthClientDetailsDO;
 import com.springframework.auth.service.OauthSecurityService;
 import com.springframework.domain.base.RestResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public class OauthSecurityServiceRemoteImpl implements OauthSecurityServiceRemot
     }
 
     @Override
-    public RestResult<Integer> createOauthClientDetails(OauthClientDetailsDTO oauthClientDetails) {
+    public RestResult<Integer> createOauthClientDetails(@RequestBody OauthClientDetailsDTO oauthClientDetails) {
         oauthClientDetails.setClientId(UUID.randomUUID().toString());
         oauthClientDetails.setClientSecret(UUID.randomUUID().toString());
         Integer result = oauthSecurityService.createOauthClientDetails(oauthClientDetails);
@@ -33,7 +35,7 @@ public class OauthSecurityServiceRemoteImpl implements OauthSecurityServiceRemot
     }
 
     @Override
-    public RestResult<Integer> updateOauthClientDetails(OauthClientDetailsDTO oauthClientDetails) {
+    public RestResult<Integer> updateOauthClientDetails(@RequestBody OauthClientDetailsDTO oauthClientDetails) {
         OauthClientDetailsDO clientDetailsDO = oauthSecurityService.selectOauthClientDetailsByClientId(oauthClientDetails.getClientId());
         Preconditions.checkNotNull(clientDetailsDO, String.format("clientId : [%s] not exist", oauthClientDetails.getClientId()));
         Integer result = oauthSecurityService.updateOauthClientDetails(oauthClientDetails);
@@ -41,18 +43,20 @@ public class OauthSecurityServiceRemoteImpl implements OauthSecurityServiceRemot
     }
 
     @Override
-    public RestResult<OauthClientDetailsDTO> list(OauthClientDetailsDTO oauthClientDetails, int pageIndex, int pageSize) {
+    public RestResult<OauthClientDetailsDTO> list(@RequestBody OauthClientDetailsDTO dto,
+                                                  @RequestParam(value = "index") int pageIndex,
+                                                  @RequestParam(value = "size") int pageSize) {
         return new RestResult<>(null);
     }
 
     @Override
-    public RestResult<Integer> deleteByPrimaryKey(Long id) {
+    public RestResult<Integer> deleteByPrimaryKey(@RequestParam(value = "id") Long id) {
 
         return new RestResult<>(null);
     }
 
     @Override
-    public RestResult<Integer> batchDeleteByPrimaryKey(List<Long> ids) {
+    public RestResult<Integer> batchDeleteByPrimaryKey(@RequestBody List<Long> ids) {
 
         return new RestResult<>(null);
     }

@@ -1,23 +1,20 @@
-package com.springframework.gateway.api;
+package com.springframework.sso.remote;
 
 import com.springframework.auth.api.domain.vo.AccessTokenVO;
 import com.springframework.auth.api.domain.vo.SecurityOauth2VO;
 import com.springframework.domain.base.RestResult;
-import io.swagger.annotations.Api;
+import com.springframework.sso.remote.fallback.SecurityAuthServiceRemoteClientFallbackFactory;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author summer
- * 2019/4/29
+ * 2019/4/30
  */
-@Api(value = "授权接口", tags = "授权接口")
-@RequestMapping("/oauth")
-public interface SecurityAuthServiceRemote {
-
-
+@FeignClient(value = "auth-server", fallbackFactory = SecurityAuthServiceRemoteClientFallbackFactory.class)
+public interface SecurityAuthServiceRemoteClient {
     /**
      * 授权码模式，获取 code，回调暂时不行
      *
@@ -25,7 +22,7 @@ public interface SecurityAuthServiceRemote {
      * @param redirectUri redirectUri
      * @return access token
      */
-    @PostMapping(value = "/authorize?response_type=code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/oauth/authorize?response_type=code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     RestResult<String> authorize(@RequestParam(value = "client_id") String clientId,
                                  @RequestParam(value = "redirect_uri") String redirectUri);
 
@@ -38,7 +35,7 @@ public interface SecurityAuthServiceRemote {
      * @param redirectUri  redirectUri
      * @return access token
      */
-    @PostMapping(value = "/token?grant_type=authorization_code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/oauth/token?grant_type=authorization_code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     RestResult<SecurityOauth2VO> getAccessToken(@RequestParam(value = "code") String code,
                                                 @RequestParam(value = "client_id") String clientId,
                                                 @RequestParam(value = "client_secret") String clientSecret,
@@ -52,7 +49,7 @@ public interface SecurityAuthServiceRemote {
      * @param password passowrd
      * @return access token
      */
-    @PostMapping(value = "/token?grant_type=password", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/oauth/token?grant_type=password", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "username") String username,
                                                        @RequestParam(value = "password") String password);
 

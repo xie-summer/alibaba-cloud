@@ -100,6 +100,7 @@
         <module>cloud-gateway</module>
         <module>cloud-auth</module>
         <module>cloud-user</module>
+        <module>cloud-sso</module>
         <module>common-modules</module>
     </modules>
     <build>

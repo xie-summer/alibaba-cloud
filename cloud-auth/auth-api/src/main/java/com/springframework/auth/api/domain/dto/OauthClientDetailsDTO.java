@@ -3,8 +3,7 @@ package com.springframework.auth.api.domain.dto;
 import com.springframework.domain.base.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -17,8 +16,10 @@ import java.io.Serializable;
  * @author summer
  * @since 2019-05-06
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+
+@Getter
+@Setter
+@ToString
 @ApiModel
 public class OauthClientDetailsDTO extends BaseDTO {
 

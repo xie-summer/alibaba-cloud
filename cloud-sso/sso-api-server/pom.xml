@@ -3,26 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cloud-gateway</artifactId>
+        <artifactId>cloud-sso</artifactId>
         <groupId>com.springframework</groupId>
         <version>0.0.1-SNAPSHOT</version>
-    </parent>
+    </parent>nacos_config.sql
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <artifactId>gateway-api-server</artifactId>
-    <name>gateway-api-server</name>
-    <description>gateway-api-server</description>
+    <artifactId>sso-api-server</artifactId>
+    <name>sso-api-server</name>
+    <description>SSO服务-api-server</description>
 
     <dependencies>
-        <!--module-->
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>gateway-api</artifactId>
+            <artifactId>sso-api</artifactId>
         </dependency>
-        <!--内部框架-->
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>framework-datasource</artifactId>
+            <artifactId>user-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.springframework</groupId>
@@ -33,21 +31,16 @@
             <artifactId>framework-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-constants</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <!--gateway-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-enum</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-datasource</artifactId>
         </dependency>
         <!--nacos client-->
         <dependency>
@@ -58,23 +51,26 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!--admin监控-->
+        <!--oauth2-->
         <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -93,4 +89,3 @@
         </plugins>
     </build>
 </project>
-

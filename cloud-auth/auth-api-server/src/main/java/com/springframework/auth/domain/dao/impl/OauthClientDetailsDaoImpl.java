@@ -8,7 +8,6 @@ import com.springframework.auth.domain.mapper.OauthClientDetailsMapper;
 import com.springframework.auth.domain.po.OauthClientDetailsDO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>

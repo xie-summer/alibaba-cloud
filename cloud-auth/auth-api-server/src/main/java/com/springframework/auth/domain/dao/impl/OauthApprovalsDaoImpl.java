@@ -5,7 +5,6 @@ import com.springframework.auth.domain.dao.OauthApprovalsDao;
 import com.springframework.auth.domain.mapper.OauthApprovalsMapper;
 import com.springframework.auth.domain.po.OauthApprovalsDO;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>

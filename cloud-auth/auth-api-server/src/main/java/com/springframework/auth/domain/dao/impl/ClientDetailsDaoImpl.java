@@ -5,7 +5,6 @@ import com.springframework.auth.domain.dao.ClientDetailsDao;
 import com.springframework.auth.domain.mapper.ClientDetailsMapper;
 import com.springframework.auth.domain.po.ClientDetailsDO;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>

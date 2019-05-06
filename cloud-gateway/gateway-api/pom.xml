@@ -18,10 +18,6 @@
         <!--内部框架-->
         <dependency>
             <groupId>com.springframework</groupId>
-            <artifactId>auth-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.springframework</groupId>
             <artifactId>framework-enum</artifactId>
         </dependency>
         <dependency>

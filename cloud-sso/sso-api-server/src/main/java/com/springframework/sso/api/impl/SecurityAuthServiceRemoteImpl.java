@@ -1,10 +1,12 @@
-package com.springframework.gateway.api.impl;
+package com.springframework.sso.api.impl;
 
 import com.springframework.auth.api.domain.vo.AccessTokenVO;
 import com.springframework.auth.api.domain.vo.SecurityOauth2VO;
 import com.springframework.domain.base.RestResult;
-import com.springframework.gateway.api.SecurityAuthServiceRemote;
-import com.springframework.gateway.remote.SecurityAuthServiceRemoteClient;
+import com.springframework.sso.SecurityAuthServiceRemote;
+import com.springframework.sso.remote.SecurityAuthServiceRemoteClient;
+import com.springframework.sso.remote.UserServiceClient;
+import com.springframework.user.api.domain.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote {
 
     private final SecurityAuthServiceRemoteClient securityAuthServiceRemoteClient;
+    private final UserServiceClient userServiceClient;
 
     @Autowired
-    public SecurityAuthServiceRemoteImpl(SecurityAuthServiceRemoteClient securityAuthServiceRemoteClient) {
+    public SecurityAuthServiceRemoteImpl(SecurityAuthServiceRemoteClient securityAuthServiceRemoteClient, UserServiceClient userServiceClient) {
         this.securityAuthServiceRemoteClient = securityAuthServiceRemoteClient;
+        this.userServiceClient = userServiceClient;
     }
 
     /**
@@ -31,7 +35,8 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
      * @return access token
      */
     @Override
-    public RestResult<String> authorize(@RequestParam(value = "client_id") String clientId,
+    public RestResult<String> authorize(@RequestParam(value = "response_type") String responseType,
+                                        @RequestParam(value = "client_id") String clientId,
                                         @RequestParam(value = "redirect_uri") String redirectUri) {
         return securityAuthServiceRemoteClient.authorize(clientId, redirectUri);
     }
@@ -48,6 +53,7 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
     @Override
     public RestResult<SecurityOauth2VO> getAccessToken(@RequestParam(value = "code") String code,
                                                        @RequestParam(value = "client_id") String clientId,
+                                                       @RequestParam(value = "grant_type") String grantType,
                                                        @RequestParam(value = "client_secret") String clientSecret,
                                                        @RequestParam(value = "redirect_uri") String redirectUri) {
         return securityAuthServiceRemoteClient.getAccessToken(code, clientId, clientSecret, redirectUri);
@@ -62,8 +68,10 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
      * @return access token
      */
     @Override
-    public RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "username") String username,
+    public RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "grant_type") String grantType,
+                                                              @RequestParam(value = "username") String username,
                                                               @RequestParam(value = "password") String password) {
+        RestResult<UserVO> byUserName = userServiceClient.getByUserName(username);
         return securityAuthServiceRemoteClient.getAccessTokenByPassword(username, password);
     }
 }

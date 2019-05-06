@@ -18,6 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <!--内部发布依赖-->
+        <sso-api.version>0.0.1-SNAPSHOT</sso-api.version>
         <auth-api.version>0.0.1-SNAPSHOT</auth-api.version>
         <user-api.version>0.0.1-SNAPSHOT</user-api.version>
         <gateway-api.version>0.0.1-SNAPSHOT</gateway-api.version>
@@ -108,6 +109,11 @@
     <dependencyManagement>
         <dependencies>
             <!--  内部发布依赖  -->
+            <dependency>
+                <groupId>com.springframework</groupId>
+                <artifactId>sso-api</artifactId>
+                <version>${sso-api.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.springframework</groupId>
                 <artifactId>auth-api</artifactId>
