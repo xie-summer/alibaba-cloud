@@ -1,9 +1,11 @@
 package com.springframework.auth.domain.dao.impl;
 
-import com.springframework.auth.domain.po.OauthAccessToken;
-import com.springframework.auth.domain.mapper.OauthAccessTokenMapper;
-import com.springframework.auth.domain.dao.OauthAccessTokenDao;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.springframework.auth.domain.dao.OauthAccessTokenDao;
+import com.springframework.auth.domain.mapper.OauthAccessTokenMapper;
+import com.springframework.auth.domain.po.OauthAccessTokenDO;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author summer
  * @since 2019-05-06
  */
-@Service
-public class OauthAccessTokenDaoImpl extends ServiceImpl<OauthAccessTokenMapper, OauthAccessToken> implements OauthAccessTokenDao {
+@Repository
+public class OauthAccessTokenDaoImpl extends ServiceImpl<OauthAccessTokenMapper, OauthAccessTokenDO> implements OauthAccessTokenDao {
 	
 }

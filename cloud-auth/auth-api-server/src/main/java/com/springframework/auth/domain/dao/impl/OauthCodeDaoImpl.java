@@ -1,9 +1,10 @@
 package com.springframework.auth.domain.dao.impl;
 
-import com.springframework.auth.domain.po.OauthCode;
-import com.springframework.auth.domain.mapper.OauthCodeMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.springframework.auth.domain.dao.OauthCodeDao;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.springframework.auth.domain.mapper.OauthCodeMapper;
+import com.springframework.auth.domain.po.OauthCodeDO;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @author summer
  * @since 2019-05-06
  */
-@Service
-public class OauthCodeDaoImpl extends ServiceImpl<OauthCodeMapper, OauthCode> implements OauthCodeDao {
+@Repository
+public class OauthCodeDaoImpl extends ServiceImpl<OauthCodeMapper, OauthCodeDO> implements OauthCodeDao {
 	
 }

@@ -1,7 +1,8 @@
 package com.springframework.auth.domain.mapper;
 
-import com.springframework.auth.domain.po.OauthCode;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.springframework.auth.domain.po.OauthCodeDO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @author summer
  * @since 2019-05-06
  */
-public interface OauthCodeMapper extends BaseMapper<OauthCode> {
+@Mapper
+public interface OauthCodeMapper extends BaseMapper<OauthCodeDO> {
 
 }

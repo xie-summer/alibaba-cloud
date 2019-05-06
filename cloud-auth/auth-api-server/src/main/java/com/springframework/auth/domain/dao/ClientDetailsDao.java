@@ -8,6 +8,6 @@ package com.springframework.auth.domain.dao;
  * @author summer
  * @since 2019-05-06
  */
-public interface OauthCodeDao  {
+public interface ClientDetailsDao  {
 	
 }

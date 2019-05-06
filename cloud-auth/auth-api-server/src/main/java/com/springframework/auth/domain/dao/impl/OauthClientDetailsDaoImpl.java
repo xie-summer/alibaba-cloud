@@ -1,9 +1,10 @@
 package com.springframework.auth.domain.dao.impl;
 
-import com.springframework.auth.domain.po.OauthClientDetails;
-import com.springframework.auth.domain.mapper.OauthClientDetailsMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.springframework.auth.domain.dao.OauthClientDetailsDao;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.springframework.auth.domain.mapper.OauthClientDetailsMapper;
+import com.springframework.auth.domain.po.OauthClientDetailsDO;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @author summer
  * @since 2019-05-06
  */
-@Service
-public class OauthClientDetailsDaoImpl extends ServiceImpl<OauthClientDetailsMapper, OauthClientDetails> implements OauthClientDetailsDao {
+@Repository
+public class OauthClientDetailsDaoImpl extends ServiceImpl<OauthClientDetailsMapper, OauthClientDetailsDO> implements OauthClientDetailsDao {
 	
 }
