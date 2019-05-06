@@ -1,6 +1,5 @@
 package com.springframework.feign.configure;
 
-import com.netflix.loadbalancer.DynamicServerListLoadBalancer;
 import com.netflix.loadbalancer.ILoadBalancer;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClientImportSelector;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -25,24 +25,23 @@ import org.springframework.core.annotation.Order;
 @Data
 @Order(2147483548)
 @AutoConfigureOrder(2147483548)
-@AutoConfigureAfter(EnableDiscoveryClientImportSelector.class)
+@AutoConfigureAfter(value = {EnableDiscoveryClientImportSelector.class, LoadBalancerAutoConfiguration.class})
 public class FeignAutoConfig {
 
     @Autowired(required = false)
     private DiscoveryClient discoveryClient;
-
+    @Autowired(required = false)
+    private ILoadBalancer loadBalancer;
     @Bean
     @ConditionalOnMissingBean(FeignConfig.class)
-    @Order(1)
     public FeignConfig feignConfig() {
-        return new FeignConfig(loadBalancer(),discoveryClient);
+        return new FeignConfig(loadBalancer,discoveryClient);
     }
 
-    @Bean
-    @Order(1)
-    @ConditionalOnMissingBean(ILoadBalancer.class)
-    public ILoadBalancer loadBalancer() {
-        return new DynamicServerListLoadBalancer();
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(ILoadBalancer.class)
+//    public ILoadBalancer loadBalancer() {
+//        return LoadBalancerBuilder.newBuilder().buildDynamicServerListLoadBalancer();
+//    }
 
 }
