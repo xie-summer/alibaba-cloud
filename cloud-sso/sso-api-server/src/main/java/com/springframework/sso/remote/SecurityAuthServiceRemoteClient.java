@@ -6,7 +6,8 @@ import com.springframework.domain.base.RestResult;
 import com.springframework.sso.remote.fallback.SecurityAuthServiceRemoteClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -22,7 +23,7 @@ public interface SecurityAuthServiceRemoteClient {
      * @param redirectUri redirectUri
      * @return access token
      */
-    @PostMapping(value = "/oauth/authorize?response_type=code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(value = "/oauth/authorize?response_type=code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
     RestResult<String> authorize(@RequestParam(value = "client_id") String clientId,
                                  @RequestParam(value = "redirect_uri") String redirectUri);
 
@@ -35,7 +36,7 @@ public interface SecurityAuthServiceRemoteClient {
      * @param redirectUri  redirectUri
      * @return access token
      */
-    @PostMapping(value = "/oauth/token?grant_type=authorization_code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(value = "/oauth/token?grant_type=authorization_code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
     RestResult<SecurityOauth2VO> getAccessToken(@RequestParam(value = "code") String code,
                                                 @RequestParam(value = "client_id") String clientId,
                                                 @RequestParam(value = "client_secret") String clientSecret,
@@ -49,7 +50,7 @@ public interface SecurityAuthServiceRemoteClient {
      * @param password passowrd
      * @return access token
      */
-    @PostMapping(value = "/oauth/token?grant_type=password", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(value = "/oauth/token?grant_type=password", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
     RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "username") String username,
                                                        @RequestParam(value = "password") String password);
 
