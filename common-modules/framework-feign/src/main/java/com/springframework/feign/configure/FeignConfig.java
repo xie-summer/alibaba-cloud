@@ -2,14 +2,10 @@ package com.springframework.feign.configure;
 
 //import com.springframework.trace.constant.CatMsgConstants;
 
-import com.netflix.loadbalancer.*;
-import com.springframework.feign.configure.rule.GrayScaleRule;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,23 +25,10 @@ import java.util.Objects;
 public class FeignConfig implements RequestInterceptor {
     @Value("${spring.application.name}")
     private String clientServiceId;
-    /**
-     * 灰度路由
-     */
-    @Value("${spring.application.feature:}")
-    private String requestFeature;
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String X_FEIGNORIGIN_HEADER = "X-FeignOrigin";
     public static final String X_REQUEST_FEATURE_HEADER = "X-RequestFeature";
-    private ILoadBalancer loadBalancer;
-    private DiscoveryClient discoveryClient;
-
-    private final static IRule DEFAULT_RULE = new RoundRobinRule();
-    protected IRule rule = DEFAULT_RULE;
-
-    public FeignConfig(ILoadBalancer loadBalancer, DiscoveryClient discoveryClient) {
-        this.loadBalancer = loadBalancer;
-        this.discoveryClient = discoveryClient;
+    public FeignConfig() {
     }
 
     @Override
@@ -80,26 +63,7 @@ public class FeignConfig implements RequestInterceptor {
 //        requestTemplate.header(Cat.Context.PARENT, parentId);
 //        requestTemplate.header(CatMsgConstants.APPLICATION_KEY, Cat.getManager().getDomain());
 //        log.info(" 开始Feign远程调用 : " + requestTemplate.method() + " 消息模型 : rootId = " + rootId + " parentId = " + parentId + " childId = " + childId);
-        if (StringUtils.hasText(requestFeature)) {
-            requestTemplate.header(X_FEIGNORIGIN_HEADER, clientServiceId);
-            if (loadBalancer == null) {
-                log.warn("no load balancer");
-                return;
-            }
-            if (loadBalancer instanceof ZoneAwareLoadBalancer) {
-                rule = ((ZoneAwareLoadBalancer) loadBalancer).getRule();
-                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient, rule, requestFeature, loadBalancer);
-                ((ZoneAwareLoadBalancer) loadBalancer).setRule(grayscaleRule);
-            } else if (loadBalancer instanceof DynamicServerListLoadBalancer) {
-                rule = ((DynamicServerListLoadBalancer) loadBalancer).getRule();
-                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient, rule, requestFeature, loadBalancer);
-                ((DynamicServerListLoadBalancer) loadBalancer).setRule(grayscaleRule);
-            } else if (loadBalancer instanceof BaseLoadBalancer) {
-                rule = ((BaseLoadBalancer) loadBalancer).getRule();
-                GrayScaleRule grayscaleRule = new GrayScaleRule(discoveryClient, rule, requestFeature, loadBalancer);
-                ((BaseLoadBalancer) loadBalancer).setRule(grayscaleRule);
-            }
-        }
+
     }
 
     private Map<String, String> getHeaders(HttpServletRequest request) {
