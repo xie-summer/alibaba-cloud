@@ -1,27 +1,22 @@
 package com.springframework.feign.configure;
 
-import com.netflix.client.config.IClientConfig;
-import com.netflix.loadbalancer.ILoadBalancer;
 import com.netflix.loadbalancer.IRule;
-import com.netflix.loadbalancer.ZoneAvoidanceRule;
 import com.springframework.feign.configure.rule.GrayScaleRule;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClientImportSelector;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration;
 import org.springframework.cloud.netflix.ribbon.PropertiesFactory;
-import org.springframework.cloud.netflix.ribbon.RibbonClientName;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.client.RestTemplate;
 
 
 /**
@@ -41,7 +36,11 @@ public class FeignAutoConfig {
     @Autowired(required = false)
     private PropertiesFactory propertiesFactory;
 
-
+    @Bean
+    @ConditionalOnMissingBean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
     @Bean
     @ConditionalOnMissingBean(FeignConfig.class)
     public FeignConfig feignConfig() {

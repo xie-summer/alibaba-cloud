@@ -1,6 +1,8 @@
 package com.springframework.gateway.configure;
 
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -9,12 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.reactive.CorsUtils;
-import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 /**
@@ -33,17 +32,21 @@ public class RouteConfiguration {
     private static final String ALLOWED_ORIGIN = "*";
     private static final String ALLOWED_EXPOSE = "*";
     private static final String MAX_AGE = "18000L";
+
     @Bean
+    @ConditionalOnMissingBean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
     }
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    @ConditionalOnMissingBean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 
     @Bean
+    @ConditionalOnMissingBean
     LoadBalancerInterceptor loadBalancerInterceptor(LoadBalancerClient loadBalance) {
         return new LoadBalancerInterceptor(loadBalance);
     }
