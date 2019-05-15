@@ -48,7 +48,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 //认证失败的业务处理
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint())
-                .accessDeniedHandler(customAccessDeineHandler())
+//                .accessDeniedHandler(customAccessDeineHandler())
                 .and()
                 .logout()
                 .logoutUrl("/oauth/logout")
