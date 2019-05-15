@@ -1,6 +1,7 @@
 package com.springframework.auth.security;
 
 
+import com.springframework.auth.security.handler.CustomAccessDeineHandler;
 import com.springframework.auth.security.handler.CustomAuthenticationEntryPoint;
 import com.springframework.auth.security.handler.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
@@ -40,13 +42,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
-                .antMatchers("/v2/api-docs","/login", "/oauth/**", "/swagger-ui.html", "/webjars/**").permitAll()
-                //配置users访问控制，必须认证过后才可以访问
+                .antMatchers("/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
                 .and()
                 //认证失败的业务处理
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint())
+                .accessDeniedHandler(customAccessDeineHandler())
                 .and()
                 .logout()
                 .logoutUrl("/oauth/logout")
@@ -64,6 +66,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @ConditionalOnMissingBean
     public AuthenticationEntryPoint customAuthenticationEntryPoint() {
         return new CustomAuthenticationEntryPoint();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public AccessDeniedHandler customAccessDeineHandler() {
+        return new CustomAccessDeineHandler();
     }
 
 }
