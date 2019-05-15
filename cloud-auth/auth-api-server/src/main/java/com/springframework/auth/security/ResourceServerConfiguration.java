@@ -44,8 +44,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
+//                .and()
+//                .addFilter(new JWTLoginFilter(authenticationManager()))
+//                .addFilter(new JwtAuthenticationFilter(authenticationManager()));
+
                 .and()
-                //认证失败的业务处理
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint())
 //                .accessDeniedHandler(customAccessDeineHandler())
