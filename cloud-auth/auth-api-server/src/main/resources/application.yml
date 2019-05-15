@@ -99,9 +99,9 @@
 #  check-config-location: false
 #
 ## 授权模式
-security:
-  oauth2:
-    client:
+#security:
+#  oauth2:
+#    client:
 #      credentials-client-id: 5ad953bf-5da4-4008-b519-16de233d52c8
 #      password-client-id: afea9402-e79b-4aca-83d3-96d3d789c8e3
 #      code-client-id: e35e736b-5db1-4b22-af2c-a658248cc74f
@@ -111,9 +111,9 @@ security:
 #      #      grant-type-client-credentials:
 #      #      grant-type-password: "password"
 #      refresh-token: "refresh_token"
-      resource-ids: "*"
+#      resource-ids: "*"
 #      scope: "read","write"
-      authorized-grant-types: "authorization_code","client_credentials","password"
+#      authorized-grant-types: "authorization_code","client_credentials","password"
 ## boot 监控
 #management:
 #  endpoint:
