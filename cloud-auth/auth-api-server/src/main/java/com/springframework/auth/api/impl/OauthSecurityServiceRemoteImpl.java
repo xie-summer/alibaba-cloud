@@ -59,5 +59,6 @@ public class OauthSecurityServiceRemoteImpl implements OauthSecurityServiceRemot
     public RestResult<Integer> batchDeleteByPrimaryKey(@RequestBody List<Long> ids) {
 
         return new RestResult<>(null);
+
     }
 }

@@ -128,3 +128,4 @@ common-modules/framework-swgger/target/javadoc-bundle-options/
 common-modules/framework-swgger/target/maven-archiver/
 common-modules/framework-swgger/target/maven-status/
 **/target/
+/logs/

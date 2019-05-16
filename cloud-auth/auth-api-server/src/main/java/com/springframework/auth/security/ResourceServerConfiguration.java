@@ -28,7 +28,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Autowired
     private ResourceServerTokenServices tokenServices;
-    @Value("${security.oauth2.client.resource-ids:*}")
+    @Value("${security.oauth2.client.resource-ids:}")
     private String resourceId;
 
     @Override
@@ -39,7 +39,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**").permitAll()

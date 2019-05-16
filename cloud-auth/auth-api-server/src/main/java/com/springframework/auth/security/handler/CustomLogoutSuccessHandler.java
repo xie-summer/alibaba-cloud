@@ -23,15 +23,23 @@ import java.io.IOException;
 public class CustomLogoutSuccessHandler extends AbstractAuthenticationTargetUrlRequestHandler implements LogoutSuccessHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomLogoutSuccessHandler.class);
 
-    @Autowired
+    @Autowired(required = false)
     private TokenStore tokenStore;
+    @Autowired(required = false)
+    private TokenStore jwtTokenStore;
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        LOGGER.info(" =================  成功退出系统 .... ");
-        String access_token = request.getParameter("access_token");
-        if (access_token != null) {
-            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(access_token);
+        LOGGER.info(" =================  成功退出系统  =================  ");
+        final String accessToken = request.getParameter("access_token");
+        if (accessToken != null) {
+            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
+            if (oAuth2AccessToken == null) {
+                oAuth2AccessToken = jwtTokenStore.readAccessToken(accessToken);
+                LOGGER.info("token =" + oAuth2AccessToken.getValue());
+                jwtTokenStore.removeAccessToken(oAuth2AccessToken);
+                return;
+            }
             LOGGER.info("token =" + oAuth2AccessToken.getValue());
             tokenStore.removeAccessToken(oAuth2AccessToken);
         }
