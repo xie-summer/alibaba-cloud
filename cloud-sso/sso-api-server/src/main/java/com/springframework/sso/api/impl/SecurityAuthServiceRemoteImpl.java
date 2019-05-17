@@ -71,7 +71,6 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
     public RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "grant_type") String grantType,
                                                               @RequestParam(value = "username") String username,
                                                               @RequestParam(value = "password") String password) {
-        RestResult<UserVO> byUserName = userServiceClient.getByUserName(username);
         return securityAuthServiceRemoteClient.getAccessTokenByPassword(username, password);
     }
 }

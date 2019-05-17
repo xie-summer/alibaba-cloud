@@ -41,7 +41,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.csrf().disable()
                 .requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
-                .antMatchers("/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**")
+                .antMatchers("/swagger-resources/**","/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**")
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
