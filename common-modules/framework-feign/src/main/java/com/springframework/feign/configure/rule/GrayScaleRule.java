@@ -146,11 +146,14 @@ public class GrayScaleRule extends AbstractLoadBalancerRule {
     @Override
     public void setLoadBalancer(ILoadBalancer lb) {
         super.setLoadBalancer(lb);
-        iRule.setLoadBalancer(lb);
+        getRule().setLoadBalancer(lb);
     }
 
     public void setRule(IRule subRule) {
         this.iRule = (subRule != null) ? subRule : new RoundRobinRule();
+    }
+    public IRule getRule() {
+       return this.iRule != null ? iRule : new RoundRobinRule();
     }
 
     @Override

@@ -28,9 +28,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Autowired
     private ResourceServerTokenServices tokenServices;
-    @Value("${security.oauth2.client.resource-ids:}")
+    @Value("${security.oauth2.client.resource-ids:auth-server}")
     private String resourceId;
-
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.resourceId(resourceId).stateless(true).tokenServices(tokenServices);
@@ -42,8 +41,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.csrf().disable()
                 .requestMatcher(new OAuthRequestedMatcher())
                 .authorizeRequests()
-                .antMatchers("/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
+                .antMatchers("/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**")
+                .permitAll()
+                .antMatchers(HttpMethod.OPTIONS)
+                .permitAll()
+                .anyRequest()
+                .authenticated()
 //                .and()
 //                .addFilter(new JWTLoginFilter(authenticationManager()))
 //                .addFilter(new JwtAuthenticationFilter(authenticationManager()));

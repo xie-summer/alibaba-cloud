@@ -152,17 +152,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         configurer.jdbc(dataSource).passwordEncoder(passwordEncoder);
         //配置3个个客户端,一个用于password认证、一个用于client认证、一个用于authorization_code认证
         // 使用in-memory存储
-        /*configurer.inMemory()
-                .withClient(credentialsClientId)
-                .authorizedGrantTypes(authorizationCode,IMPLICIT,codeClientId, grantTypePassword,refreshToken)
-                .authorities("ROLE_ADMIN")
-                .scopes(scopeRead, scopeWrite)
-                .resourceIds(resourceIds)
-                .redirectUris(registeredRedirectUris)
-                .accessTokenValiditySeconds(accessTokenValiditySeconds)
-                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
-                .secret(bCryptPasswordEncoder.encode(clientSecret));
-*/
+//        configurer.inMemory()
+//                .withClient(credentialsClientId)
+//                .authorizedGrantTypes(authorizationCode,IMPLICIT,codeClientId, grantTypePassword,refreshToken)
+//                .authorities("ROLE_ADMIN")
+//                .scopes(scopeRead, scopeWrite)
+//                .resourceIds(resourceIds)
+//                .redirectUris(registeredRedirectUris)
+//                .accessTokenValiditySeconds(accessTokenValiditySeconds)
+//                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
+//                .secret(passwordEncoder.encode(clientSecret));
         LOGGER.info("===============配置授权服务器完成=========");
 
     }

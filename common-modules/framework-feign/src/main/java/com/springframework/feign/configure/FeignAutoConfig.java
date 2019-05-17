@@ -50,6 +50,7 @@ public class FeignAutoConfig {
     @Bean
     @Primary
     @ConditionalOnMissingBean
+    @ConditionalOnProperty(value = "feign.ribbon.grayScaleRule.enable", matchIfMissing = false)
     public IRule ribbonRule() {
         return new GrayScaleRule(discoveryClient, null);
     }

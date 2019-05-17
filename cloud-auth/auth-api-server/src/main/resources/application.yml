@@ -101,15 +101,16 @@
 ## 授权模式
 #security:
 #  oauth2:
-#    client:
-#      credentials-client-id: 5ad953bf-5da4-4008-b519-16de233d52c8
+    #      credentials-client-id: 5ad953bf-5da4-4008-b519-16de233d52c8
 #      password-client-id: afea9402-e79b-4aca-83d3-96d3d789c8e3
 #      code-client-id: e35e736b-5db1-4b22-af2c-a658248cc74f
 #      client-secret: 4ad25ec5-dfaa-4958-be1a-d89757c28f5a
 #      access-token-validity-seconds: 2592000
 #      refresh-token-validity-seconds: 2678400
-#      #      grant-type-client-credentials:
-#      #      grant-type-password: "password"
+      #      grant-type-client-credentials:
+      #      grant-type-password: "password"
+#    client:
+#        access-token-uri: http://127.0.0.1:8086/oauth/token
 #      refresh-token: "refresh_token"
 #      resource-ids: "*"
 #      scope: "read","write"
