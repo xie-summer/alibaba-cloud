@@ -40,7 +40,7 @@ public interface SecurityAuthServiceRemoteClient {
      * @return access token
      */
     @RequestMapping(value = "/oauth/authorize?response_type=code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
-    RestResult<String> authorize(@RequestParam(value = "client_id") String clientId,
+    String authorize(@RequestParam(value = "client_id") String clientId,
                                  @RequestParam(value = "client_secret") String clientSecret,
                                  @RequestParam(value = "redirect_uri") String redirectUri);
 
@@ -54,7 +54,7 @@ public interface SecurityAuthServiceRemoteClient {
      * @return access token
      */
     @RequestMapping(value = "/oauth/token?grant_type=authorization_code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
-    RestResult<SecurityOauth2VO> getAccessToken(@RequestParam(value = "code") String code,
+    SecurityOauth2VO getAccessToken(@RequestParam(value = "code") String code,
                                                 @RequestParam(value = "client_id") String clientId,
                                                 @RequestParam(value = "client_secret") String clientSecret,
                                                 @RequestParam(value = "redirect_uri") String redirectUri);
@@ -68,7 +68,7 @@ public interface SecurityAuthServiceRemoteClient {
      * @return access token
      */
     @RequestMapping(value = "/oauth/token?grant_type=password&response_type=code", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
-    RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "username") String username,
+    AccessTokenVO getAccessTokenByPassword(@RequestParam(value = "username") String username,
                                                        @RequestParam(value = "client_id") String clientId,
                                                        @RequestParam(value = "client_secret") String clientSecret,
                                                        @RequestParam(value = "password") String password);

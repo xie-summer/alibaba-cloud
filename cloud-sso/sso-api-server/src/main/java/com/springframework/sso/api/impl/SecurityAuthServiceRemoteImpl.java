@@ -37,7 +37,9 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
                                         @RequestParam(value = "client_id") String clientId,
                                         @RequestParam(value = "client_secret") String clientSecret,
                                         @RequestParam(value = "redirect_uri") String redirectUri) {
-        return securityAuthServiceRemoteClient.authorize(clientId,clientSecret, redirectUri);
+        String authorize = securityAuthServiceRemoteClient.authorize(clientId, clientSecret, redirectUri);
+
+        return new RestResult<>(authorize);
     }
 
     /**
@@ -55,7 +57,8 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
                                                        @RequestParam(value = "grant_type") String grantType,
                                                        @RequestParam(value = "client_secret") String clientSecret,
                                                        @RequestParam(value = "redirect_uri") String redirectUri) {
-        return securityAuthServiceRemoteClient.getAccessToken(code, clientId, clientSecret, redirectUri);
+        SecurityOauth2VO accessToken = securityAuthServiceRemoteClient.getAccessToken(code, clientId, clientSecret, redirectUri);
+        return new RestResult<>(accessToken);
     }
 
 
@@ -72,6 +75,7 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
                                                               @RequestParam(value = "client_secret") String clientSecret,
                                                               @RequestParam(value = "username") String username,
                                                               @RequestParam(value = "password") String password) {
-        return securityAuthServiceRemoteClient.getAccessTokenByPassword(username,clientId,clientSecret, password);
+        AccessTokenVO accessToken = securityAuthServiceRemoteClient.getAccessTokenByPassword(username, clientId, clientSecret, password);
+        return new RestResult<>(accessToken);
     }
 }
