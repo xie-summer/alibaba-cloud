@@ -1,5 +1,6 @@
 package com.springframework.auth.security;
 
+import com.springframework.auth.api.constant.JWTConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -254,7 +255,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 return super.extractAccessToken(value, map);
             }
         };
-        converter.setSigningKey("bcrypt");
+        converter.setSigningKey(JWTConstant.secretKey);
         return converter;
     }
 

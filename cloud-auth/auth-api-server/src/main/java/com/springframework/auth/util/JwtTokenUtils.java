@@ -45,7 +45,7 @@ public class JwtTokenUtils {
     /**
      * secret key
      */
-    private String secretKey;
+    private String secretKey="bcrypt";
 
     /**
      * Token validity time(ms)
