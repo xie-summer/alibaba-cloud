@@ -1,6 +1,7 @@
 package com.springframework.auth.security;
 
 
+import com.springframework.auth.api.configure.ServiceResourceAuthProperties;
 import com.springframework.auth.api.security.OAuthRequestedMatcher;
 import com.springframework.auth.security.handler.CustomAccessDeineHandler;
 import com.springframework.auth.security.handler.CustomAuthenticationEntryPoint;
@@ -29,7 +30,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Autowired
     private ResourceServerTokenServices tokenServices;
-    @Value("${security.oauth2.client.resource-ids:auth-server}")
+    @Autowired
+    private ServiceResourceAuthProperties serviceResourceAuthProperties;
+    @Value("${spring.application.name:auth-server}")
     private String resourceId;
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
@@ -40,7 +43,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .requestMatcher(new OAuthRequestedMatcher())
+                .requestMatcher(new OAuthRequestedMatcher(serviceResourceAuthProperties))
                 .authorizeRequests()
                 .antMatchers("/swagger-resources/**","/v2/api-docs", "/login", "/oauth/**", "/swagger-ui.html", "/webjars/**")
                 .permitAll()
@@ -48,10 +51,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .permitAll()
                 .anyRequest()
                 .authenticated()
-//                .and()
-//                .addFilter(new JWTLoginFilter(authenticationManager()))
-//                .addFilter(new JwtAuthenticationFilter(authenticationManager()));
-
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint())

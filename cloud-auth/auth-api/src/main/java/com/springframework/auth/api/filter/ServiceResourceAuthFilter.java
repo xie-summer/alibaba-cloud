@@ -50,7 +50,7 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
             return;
         } else if (!ignoreUrls.isEmpty()) {
             //忽略放行
-            List<RequestMatcher> antMatchers = ServiceResourceAuthFilter.antMatchers(request.getMethod(), ignoreUrls);
+            List<RequestMatcher> antMatchers = OAuthRequestedMatcher.antMatchers(request.getMethod(), ignoreUrls);
             boolean matches = false;
             for (RequestMatcher antMatcher : antMatchers) {
                 matches = antMatcher.matches(request);

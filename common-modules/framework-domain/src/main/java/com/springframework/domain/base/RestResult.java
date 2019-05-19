@@ -35,7 +35,7 @@ public class RestResult<T> implements Serializable {
     private int code;
     private String message;
     private T data;
-    private LocalDateTime timestamp;
+//    private LocalDateTime timestamp;
 
     public RestResult() {
     }
@@ -44,33 +44,33 @@ public class RestResult<T> implements Serializable {
         this.code = HttpStatus.OK.value();
         this.setMessage(HttpStatus.OK.getReasonPhrase());
         this.data = data;
-        this.timestamp = LocalDateTime.now();
+//        this.timestamp = LocalDateTime.now();
     }
 
     public RestResult(HttpStatus httpStatus, T data) {
         this.code = httpStatus.value();
         this.setMessage(httpStatus.getReasonPhrase());
         this.data = data;
-        this.timestamp = LocalDateTime.now();
+//        this.timestamp = LocalDateTime.now();
     }
 
     public RestResult(int code, String message, T data) {
         this.code = code;
         this.setMessage(message);
         this.data = data;
-        this.timestamp = LocalDateTime.now();
+//        this.timestamp = LocalDateTime.now();
     }
 
     public RestResult(int code, T data) {
         this.code = code;
         this.data = data;
-        this.timestamp = LocalDateTime.now();
+//        this.timestamp = LocalDateTime.now();
     }
 
     public RestResult(int code, String message) {
         this.code = code;
         this.setMessage(message);
-        this.timestamp = LocalDateTime.now();
+//        this.timestamp = LocalDateTime.now();
     }
 
 }

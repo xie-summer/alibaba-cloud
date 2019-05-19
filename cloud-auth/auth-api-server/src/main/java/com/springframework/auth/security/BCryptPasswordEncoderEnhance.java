@@ -11,7 +11,7 @@ public class BCryptPasswordEncoderEnhance extends BCryptPasswordEncoder {
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        String presentedPassword = passwordEncoder.encode(encodedPassword);
+        String presentedPassword = passwordEncoder.encode(rawPassword);
         return passwordEncoder.matches(rawPassword, presentedPassword);
     }
 
