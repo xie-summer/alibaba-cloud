@@ -6,17 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.RequestMatcherProvider;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,12 +33,10 @@ import java.util.Map;
 @Data
 public class ServiceResourceAuthFilter extends OncePerRequestFilter {
 
-    private static final OAuthRequestedMatcher matcher = new OAuthRequestedMatcher();
-    @Autowired
+    private static final OAuthRequestedMatcher MATCHER = new OAuthRequestedMatcher();
     private ServiceResourceAuthProperties serviceResourceAuthProperties;
-    @Autowired
-    private OAuth2RestTemplate oAuth2RestTemplate;
-
+    private RestTemplate restTemplate;
+    private ApplicationContext applicationContext;
     /**
      * @param request
      * @param response
@@ -53,6 +47,7 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
         List<String> ignoreUrls = serviceResourceAuthProperties.getIgnoreUrls();
         if (!serviceResourceAuthProperties.getEnable()) {
             filterChain.doFilter(request, response);
+            return;
         } else if (!ignoreUrls.isEmpty()) {
             //忽略放行
             List<RequestMatcher> antMatchers = ServiceResourceAuthFilter.antMatchers(request.getMethod(), ignoreUrls);
@@ -65,9 +60,10 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
             }
             if (matches) {
                 filterChain.doFilter(request, response);
+                return;
             }
         }
-        String token = matcher.getToken(request);
+        String token = MATCHER.getToken(request);
         if (StringUtils.hasText(token)) {
             //校验token
         } else {
@@ -81,7 +77,7 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         //自定义返回数据格式
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(4);
         map.put("code", "401");
         map.put("message", "Unauthorized");
         map.put("data", "Unauthorized");

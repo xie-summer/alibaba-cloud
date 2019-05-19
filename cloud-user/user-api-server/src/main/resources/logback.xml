@@ -140,12 +140,12 @@
         </encoder>
     </appender>
 
-
-    <logger name="java.sql.PreparedStatement" value="DEBUG" />
-    <logger name="java.sql.Connection" value="DEBUG" />
-    <logger name="java.sql.Statement" value="DEBUG" />
-    <logger name="com.ibatis" value="DEBUG" />
-    <logger name="com.ibatis.common.jdbc.SimpleDataSource" value="DEBUG" />
+    <logger name="java.sql.PreparedStatement" level="DEBUG" />
+    <logger name="java.sql.Connection" level="DEBUG" />
+    <logger name="java.sql.Statement" level="DEBUG" />
+    <logger name="com.ibatis" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+    <logger name="com.alibaba.nacos" level="OFF" />
     <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
     <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
     <logger name="com.springframework.common.doc" level="DEBUG" additivity="true">
