@@ -1,6 +1,7 @@
 package com.springframework.auth.security;
 
 
+import com.springframework.auth.api.security.OAuthRequestedMatcher;
 import com.springframework.auth.security.handler.CustomAccessDeineHandler;
 import com.springframework.auth.security.handler.CustomAuthenticationEntryPoint;
 import com.springframework.auth.security.handler.CustomLogoutSuccessHandler;

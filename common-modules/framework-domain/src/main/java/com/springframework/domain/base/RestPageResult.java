@@ -18,6 +18,7 @@ package com.springframework.domain.base;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * rest page result
@@ -36,4 +37,5 @@ public class RestPageResult<T> implements Serializable {
     private int pageSize;
     private int currentPage;
     private T data;
+    private LocalDateTime timestamp;
 }

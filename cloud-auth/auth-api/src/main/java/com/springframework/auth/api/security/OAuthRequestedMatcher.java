@@ -1,4 +1,4 @@
-package com.springframework.auth.security;
+package com.springframework.auth.api.security;
 
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -19,6 +19,19 @@ public class OAuthRequestedMatcher implements RequestMatcher {
         boolean haveOauth2Token = (auth != null) && auth.startsWith(BEARER);
         boolean haveAccessToken = request.getParameter(ACCESS_TOKEN) != null;
         return haveOauth2Token || haveAccessToken;
+    }
+
+    public String getToken(HttpServletRequest request) {
+        String auth = request.getHeader(AUTHORIZATION);
+        boolean haveOauth2Token = (auth != null) && auth.startsWith(BEARER);
+        if(haveOauth2Token){
+            return auth;
+        }
+        boolean haveAccessToken = request.getParameter(ACCESS_TOKEN) != null;
+        if(haveAccessToken){
+            return request.getParameter(ACCESS_TOKEN);
+        }
+        return "";
     }
 
 }
