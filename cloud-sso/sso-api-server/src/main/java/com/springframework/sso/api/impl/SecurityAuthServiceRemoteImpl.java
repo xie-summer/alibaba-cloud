@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote {
 
     private final SecurityAuthServiceRemoteClient securityAuthServiceRemoteClient;
-    private final UserServiceClient userServiceClient;
 
     @Autowired
-    public SecurityAuthServiceRemoteImpl(SecurityAuthServiceRemoteClient securityAuthServiceRemoteClient, UserServiceClient userServiceClient) {
+    public SecurityAuthServiceRemoteImpl(SecurityAuthServiceRemoteClient securityAuthServiceRemoteClient) {
         this.securityAuthServiceRemoteClient = securityAuthServiceRemoteClient;
-        this.userServiceClient = userServiceClient;
     }
 
     /**
@@ -37,8 +35,9 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
     @Override
     public RestResult<String> authorize(@RequestParam(value = "response_type") String responseType,
                                         @RequestParam(value = "client_id") String clientId,
+                                        @RequestParam(value = "client_secret") String clientSecret,
                                         @RequestParam(value = "redirect_uri") String redirectUri) {
-        return securityAuthServiceRemoteClient.authorize(clientId, redirectUri);
+        return securityAuthServiceRemoteClient.authorize(clientId,clientSecret, redirectUri);
     }
 
     /**
@@ -68,9 +67,11 @@ public class SecurityAuthServiceRemoteImpl implements SecurityAuthServiceRemote 
      * @return access token
      */
     @Override
-    public RestResult<AccessTokenVO> getAccessTokenByPassword(@RequestParam(value = "grant_type") String grantType,
+    public RestResult<AccessTokenVO> getAccessTokenByPassword(
+                                                              @RequestParam(value = "client_id") String clientId,
+                                                              @RequestParam(value = "client_secret") String clientSecret,
                                                               @RequestParam(value = "username") String username,
                                                               @RequestParam(value = "password") String password) {
-        return securityAuthServiceRemoteClient.getAccessTokenByPassword(username, password);
+        return securityAuthServiceRemoteClient.getAccessTokenByPassword(username,clientId,clientSecret, password);
     }
 }

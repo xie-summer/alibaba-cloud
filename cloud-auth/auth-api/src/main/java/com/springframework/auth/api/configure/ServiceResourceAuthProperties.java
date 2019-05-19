@@ -16,5 +16,5 @@ public class ServiceResourceAuthProperties {
 
     private Boolean enable = false;
 
-    private List<String> ignoreUrls = Lists.newArrayList("/swagger-resources/**", "/v2/api-docs", "/login", "/swagger-ui.html", "/webjars/**");
+    private List<String> ignoreUrls = Lists.newArrayList("/swagger-resources/**", "/v2/api-docs", "/login","/oauth/**", "/swagger-ui.html", "/webjars/**");
 }

@@ -35,6 +35,7 @@ public interface SecurityAuthServiceRemoteClient {
      * 授权码模式，获取 code，回调暂时不行
      *
      * @param clientId    clientId
+     * @param clientSecret secret
      * @param redirectUri redirectUri
      * @return access token
      */

@@ -26,7 +26,7 @@ public interface SecurityAuthServiceRemote {
      */
     @GetMapping(value = "/authorize")
     @ApiOperation(value = "授权码模式，获取 code，回调暂时不行", notes = "授权码模式，获取 code，回调暂时不行")
-    RestResult<String> authorize(String responseType, String clientId, String redirectUri);
+    RestResult<String> authorize(String responseType, String clientId, String clientSecret,String redirectUri);
 
     /**
      * 授权码模式，获取 token，回调暂时不行
@@ -49,12 +49,15 @@ public interface SecurityAuthServiceRemote {
     /**
      * 获取 token
      *
+     * @param clientId    客户端id
+     * @param clientSecret 客户端 secret
      * @param username username
      * @param password passowrd
      * @return access token
      */
     @GetMapping(value = "/password/token")
     @ApiOperation(value = "密码模式 获取token", notes = "密码模式 获取token")
-    RestResult<AccessTokenVO> getAccessTokenByPassword(String grantType, String username, String password);
+    RestResult<AccessTokenVO> getAccessTokenByPassword(String clientId,
+                                                       String clientSecret, String username, String password);
 
 }
