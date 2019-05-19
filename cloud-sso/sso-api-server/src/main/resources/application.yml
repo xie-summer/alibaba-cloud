@@ -109,3 +109,20 @@
 #        include: "*"
 #logging:
 #  config: classpath:logback.xml
+#oauth2-server: http://localhost:3001
+#security:
+#  oauth2:
+#    client:
+#      # grant-type: client_credentials    # 授权模式
+#      client-id: client_3        # 在oauth 服务端注册的client-id
+#      client-secret: secret     # 在oauth 服务端注册的secret
+#      access-token-uri: ${oauth2-server}/oauth/token    #获取token 地址
+#      user-authorization-uri: ${oauth2-server}/oauth/authorize  # 认证地址
+#      scope: read,write
+#    resource:
+#      token-info-uri: ${oauth2-server}/oauth/check_token  # 检查token
+#      user-info-uri: ${oauth2-server}/oauth/me   # 用户信息
+#      jwt:
+#        key-uri: ${oauth2-server}/oauth/token_key
+#    sso:
+#      login-path: /login
