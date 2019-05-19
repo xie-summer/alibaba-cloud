@@ -192,7 +192,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         security
                 .tokenKeyAccess("permitAll()")
                 // isAuthenticated():排除anonymous   isFullyAuthenticated():排除anonymous以及remember-me
-                .checkTokenAccess("isAuthenticated()")
+                .checkTokenAccess("permitAll()")
                 // 允许表单认证
                 .allowFormAuthenticationForClients();
     }
