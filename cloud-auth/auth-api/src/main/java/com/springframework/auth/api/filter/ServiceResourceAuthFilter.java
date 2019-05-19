@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author summer
  */
 @Slf4j
-public class ServiceResourceVerificationAuthContextFilter extends OncePerRequestFilter {
+public class ServiceResourceAuthFilter extends OncePerRequestFilter {
     /**
      * @param request
      * @param response
