@@ -126,7 +126,7 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
 
     private boolean checkToken(String token){
         ServiceInstance serviceInstance = this.loadBalancerClient.choose("auth-server");
-        final String checkResult = this.restTemplate.getForObject("http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/auth-server/oauth/check_token?token=" + token, String.class, new Object[0]);
+        final String checkResult = this.restTemplate.getForObject("http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/oauth/check_token?token=" + token, String.class, new Object[0]);
         //TODO 待续
         return true;
     }
