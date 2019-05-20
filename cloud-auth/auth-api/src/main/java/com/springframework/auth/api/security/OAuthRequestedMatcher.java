@@ -3,6 +3,7 @@ package com.springframework.auth.api.security;
 import com.springframework.auth.api.configure.ServiceResourceAuthProperties;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class OAuthRequestedMatcher implements RequestMatcher {
         String auth = request.getHeader(AUTHORIZATION);
         boolean haveOauth2Token = (auth != null) && auth.startsWith(BEARER);
         if (haveOauth2Token) {
-            return auth;
+            return StringUtils.deleteAny(auth,BEARER).trim();
         }
         boolean haveAccessToken = request.getParameter(ACCESS_TOKEN) != null;
         if (haveAccessToken) {
