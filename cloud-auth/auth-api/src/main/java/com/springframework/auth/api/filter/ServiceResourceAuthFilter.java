@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -40,6 +42,7 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
     private ServiceResourceAuthProperties serviceResourceAuthProperties;
     private RestTemplate restTemplate;
     private ApplicationContext applicationContext;
+    private LoadBalancerClient loadBalancerClient;
     @Value("${spring.application.name:}")
     private String resourceId;
 
@@ -119,6 +122,13 @@ public class ServiceResourceAuthFilter extends OncePerRequestFilter {
             matchers.add(new AntPathRequestMatcher(pattern, httpMethod));
         }
         return matchers;
+    }
+
+    private boolean checkToken(String token){
+        ServiceInstance serviceInstance = this.loadBalancerClient.choose("auth-server");
+        final String checkResult = this.restTemplate.getForObject("http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/auth-server/oauth/check_token?token=" + token, String.class, new Object[0]);
+        //TODO 待续
+        return true;
     }
 
 }
