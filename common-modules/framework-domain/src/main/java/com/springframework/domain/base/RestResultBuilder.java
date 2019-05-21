@@ -15,6 +15,11 @@ public class RestResultBuilder<T> {
     public RestResultBuilder() {
     }
 
+    public RestResultBuilder<T> ofData(T data) {
+        this.data = data;
+        return this;
+    }
+
     public RestResultBuilder<T> ofCode(int code) {
         this.code = code;
         return this;
@@ -50,13 +55,6 @@ public class RestResultBuilder<T> {
         return this;
     }
 
-    public RestResultBuilder<T> ofData(T data) {
-        this.data = data;
-        this.message = HttpStatus.OK.getReasonPhrase();
-        this.code = HttpStatus.OK.value();
-        return this;
-    }
-
     public RestResultBuilder<T> ok(T data) {
         this.data = data;
         this.message = HttpStatus.OK.getReasonPhrase();
@@ -68,6 +66,13 @@ public class RestResultBuilder<T> {
         this.data = data;
         this.message = message;
         this.code = HttpStatus.OK.value();
+        return this;
+    }
+
+    public RestResultBuilder<T> ok(HttpStatus httpStatus, T data) {
+        this.message = httpStatus.getReasonPhrase();
+        this.code = httpStatus.value();
+        this.data = data;
         return this;
     }
 

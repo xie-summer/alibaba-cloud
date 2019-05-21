@@ -43,7 +43,7 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
             UserVO userVO = new UserVO();
             BeanUtils.copyProperties(byUserName, userVO);
             userVO.setRoles(roles.stream().map(RoleDO::getRole).collect(Collectors.toList()));
-            return new RestResultBuilder<UserVO>().ofData(HttpStatus.OK, userVO).build();
+            return new RestResultBuilder<UserVO>().ok(HttpStatus.OK, userVO).build();
         }
         return new RestResultBuilder<UserVO>().ofData(HttpStatus.OK, null).build();
     }
