@@ -1,6 +1,7 @@
 package com.springframework.feign.configure.rule;
 
 import com.netflix.client.config.IClientConfig;
+import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.loadbalancer.*;
 import com.springframework.feign.configure.FeignConfig;
 import lombok.Data;
@@ -28,8 +29,11 @@ public class GrayScaleRule extends AbstractLoadBalancerRule {
     private ILoadBalancer loadBalancer;
     private DiscoveryClient discoveryClient;
     private IRule iRule;
-    @Value("${spring.application.feature:}")
-    private String requestFeature;
+//    @Value("${spring.application.feature:}")
+    /**
+     * 灰度标记
+     */
+    private final String requestFeature= DynamicPropertyFactory.getInstance().getStringProperty("spring.application.feature","").get();
 
     public GrayScaleRule() {
         nextServerCyclicCounter = new AtomicInteger(0);
