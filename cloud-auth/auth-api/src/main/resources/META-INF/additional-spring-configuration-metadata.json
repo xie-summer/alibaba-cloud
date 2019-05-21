@@ -1,0 +1,15 @@
+{
+  "properties": [
+    {
+      "defaultValue": false,
+      "name": "security.oauth.service.enable",
+      "description": "Enables the security oauth service token filter handler.",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "name": "security.oauth.service.ignoreUrls",
+      "description": "Enables the security oauth service token filter ignoreUrls.",
+      "type": "java.util.List<java.lang.String>"
+    }
+  ]
+}

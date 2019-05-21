@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "security.oauth.service",
+      "type": "com.springframework.auth.api.configure.ServiceResourceAuthProperties",
+      "sourceType": "com.springframework.auth.api.configure.ServiceResourceAuthProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "security.oauth.service.enable",
+      "type": "java.lang.Boolean",
+      "description": "Enables the security oauth service token filter handler.",
+      "defaultValue": false
+    },
+    {
+      "name": "security.oauth.service.ignoreUrls",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.springframework.auth.api.configure.ServiceResourceAuthProperties"
+    }
+  ],
+  "hints": []
+}

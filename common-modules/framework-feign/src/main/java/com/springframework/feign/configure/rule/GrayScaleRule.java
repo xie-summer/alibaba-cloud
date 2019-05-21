@@ -7,7 +7,6 @@ import com.springframework.feign.configure.FeignConfig;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.util.StringUtils;
@@ -22,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
-public class GrayScaleRule extends AbstractLoadBalancerRule {
+public class GrayScaleRule extends ClientConfigEnabledRoundRobinRule {
     private RoundRobinRule roundRobinRule = new RoundRobinRule();
 
     private AtomicInteger nextServerCyclicCounter;
