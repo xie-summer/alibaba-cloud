@@ -16,6 +16,7 @@
     {
       "name": "security.oauth.service.ignoreUrls",
       "type": "java.util.List<java.lang.String>",
+      "description": "Enables the security oauth service token filter ignoreUrls.",
       "sourceType": "com.springframework.auth.api.configure.ServiceResourceAuthProperties"
     }
   ],
