@@ -1,5 +1,6 @@
 package com.springframework.user.api.impl;
 
+import com.springframework.domain.base.RestResultBuilder;
 import com.springframework.enums.http.HttpStatus;
 import com.springframework.feign.annotation.OriginService;
 import com.springframework.domain.base.RestResult;
@@ -25,19 +26,13 @@ import java.util.stream.Collectors;
 @RestController
 public class UserServiceRemoteImpl implements UserServiceRemote {
 
-    private final UserService userService;
-
-    @Autowired
-    public UserServiceRemoteImpl(UserService userService) {
-        this.userService = userService;
-    }
-
     /**
      * @param username 根据用户名查询用户信息
      * @return
      */
     @Override
-//    @OriginService(names = {"auth-server"}) //权限拦截
+    @OriginService(names = {"auth-server"})
+    //权限拦截
     public RestResult<UserVO> getByUserName(@RequestParam("username") String username) {
         if (StringUtils.isEmpty(username)) {
             return new RestResult<>(HttpStatus.OK, null);
@@ -48,8 +43,15 @@ public class UserServiceRemoteImpl implements UserServiceRemote {
             UserVO userVO = new UserVO();
             BeanUtils.copyProperties(byUserName, userVO);
             userVO.setRoles(roles.stream().map(RoleDO::getRole).collect(Collectors.toList()));
-            return new RestResult<>(HttpStatus.OK, userVO);
+            return new RestResultBuilder<UserVO>().ofData(HttpStatus.OK, userVO).build();
         }
-        return new RestResult<>(HttpStatus.OK, null);
+        return new RestResultBuilder<UserVO>().ofData(HttpStatus.OK, null).build();
+    }
+
+    private final UserService userService;
+
+    @Autowired
+    public UserServiceRemoteImpl(UserService userService) {
+        this.userService = userService;
     }
 }

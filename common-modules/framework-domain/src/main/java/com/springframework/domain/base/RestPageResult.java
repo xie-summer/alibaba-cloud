@@ -38,4 +38,75 @@ public class RestPageResult<T> implements Serializable {
     private int currentPage;
     private T data;
     private LocalDateTime timestamp;
+
+    RestPageResult(int code, String message, int total, int pageSize, int currentPage, T data, LocalDateTime timestamp) {
+        this.code = code;
+        this.message = message;
+        this.total = total;
+        this.pageSize = pageSize;
+        this.currentPage = currentPage;
+        this.data = data;
+        this.timestamp = timestamp;
+    }
+
+    public static <T> RestPageResultBuilder<T> builder() {
+        return new RestPageResultBuilder<T>();
+    }
+
+    public static class RestPageResultBuilder<T> {
+        private int code;
+        private String message;
+        private int total;
+        private int pageSize;
+        private int currentPage;
+        private T data;
+        private LocalDateTime timestamp;
+
+        RestPageResultBuilder() {
+        }
+
+        public RestPageResultBuilder<T> code(int code) {
+            this.code = code;
+            return this;
+        }
+
+        public RestPageResultBuilder<T> message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        public RestPageResultBuilder<T> total(int total) {
+            this.total = total;
+            return this;
+        }
+
+        public RestPageResultBuilder<T> pageSize(int pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
+        public RestPageResultBuilder<T> currentPage(int currentPage) {
+            this.currentPage = currentPage;
+            return this;
+        }
+
+        public RestPageResultBuilder<T> data(T data) {
+            this.data = data;
+            return this;
+        }
+
+        public RestPageResultBuilder<T> timestamp(LocalDateTime timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        public RestPageResult<T> build() {
+            return new RestPageResult<T>(code, message, total, pageSize, currentPage, data, timestamp);
+        }
+
+        @Override
+        public String toString() {
+            return "RestPageResult.RestPageResultBuilder(code=" + this.code + ", message=" + this.message + ", total=" + this.total + ", pageSize=" + this.pageSize + ", currentPage=" + this.currentPage + ", data=" + this.data + ", timestamp=" + this.timestamp + ")";
+        }
+    }
 }
