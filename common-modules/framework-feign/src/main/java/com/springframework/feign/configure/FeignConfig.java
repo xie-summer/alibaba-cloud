@@ -2,9 +2,11 @@ package com.springframework.feign.configure;
 
 //import com.springframework.trace.constant.CatMsgConstants;
 
+import com.netflix.loadbalancer.ILoadBalancer;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
@@ -28,6 +30,7 @@ public class FeignConfig implements RequestInterceptor {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String X_FEIGNORIGIN_HEADER = "X-FeignOrigin";
     public static final String X_REQUEST_FEATURE_HEADER = "X-RequestFeature";
+
     public FeignConfig() {
     }
 

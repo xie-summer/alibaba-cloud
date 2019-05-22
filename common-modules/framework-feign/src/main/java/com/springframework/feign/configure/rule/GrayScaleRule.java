@@ -1,18 +1,15 @@
 package com.springframework.feign.configure.rule;
 
 import com.netflix.client.config.IClientConfig;
-import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.loadbalancer.*;
-import com.springframework.feign.configure.FeignConfig;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -21,33 +18,32 @@ import java.util.concurrent.atomic.AtomicInteger;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
-public class GrayScaleRule extends ClientConfigEnabledRoundRobinRule {
+public class GrayScaleRule extends ZoneAvoidanceRule {
     private RoundRobinRule roundRobinRule = new RoundRobinRule();
 
     private AtomicInteger nextServerCyclicCounter;
     private ILoadBalancer loadBalancer;
     private DiscoveryClient discoveryClient;
     private IRule iRule;
-//    @Value("${spring.application.feature:}")
+
     /**
      * 灰度标记
      */
-    private final String requestFeature= DynamicPropertyFactory.getInstance().getStringProperty("spring.application.feature","").get();
+    @Value("${spring.application.feature:}")
+    private String requestFeature;
+//    private final String requestFeature = DynamicPropertyFactory.getInstance().getStringProperty("spring.application.feature", "").get();
 
     public GrayScaleRule() {
+        super();
         nextServerCyclicCounter = new AtomicInteger(0);
-    }
-
-    public GrayScaleRule(ILoadBalancer lb) {
-        this();
-        setLoadBalancer(lb);
     }
 
     public GrayScaleRule(DiscoveryClient discoveryClient, IRule iRule) {
         this();
         this.discoveryClient = discoveryClient;
-        this.iRule = iRule == null ? roundRobinRule : iRule;
-        this.loadBalancer = getLoadBalancer();
+        this.iRule = iRule;
+        this.loadBalancer = this.iRule == null ? super.getLoadBalancer() : iRule.getLoadBalancer();
+
     }
 
     public Server choose(ILoadBalancer lb, Object key) {
@@ -95,12 +91,12 @@ public class GrayScaleRule extends ClientConfigEnabledRoundRobinRule {
             }
             return server;
         }
-        return iRule.choose(key);
+        return super.choose(key);
     }
 
     @Override
     public Server choose(Object key) {
-        return choose(getLoadBalancer(), key);
+        return choose(loadBalancer, key);
     }
 
     private boolean filterGrayScaleRule(Server server) {
@@ -117,22 +113,8 @@ public class GrayScaleRule extends ClientConfigEnabledRoundRobinRule {
             log.warn("No  Server MetaInfo ");
             return false;
         }
-        List<String> servicesIds = discoveryClient.getServices();
-        boolean filterResult = false;
-        for (String servicesId : servicesIds) {
-            List<ServiceInstance> instances = discoveryClient.getInstances(servicesId);
-            for (ServiceInstance instance : instances) {
-                if (metaInfo.getInstanceId().equalsIgnoreCase(instance.getInstanceId())) {
-                    Map<String, String> metadata = instance.getMetadata();
-                    if (metadata != null && !metadata.isEmpty() && metadata.containsKey(FeignConfig.X_REQUEST_FEATURE_HEADER)) {
-                        String requetFeature = metadata.getOrDefault(FeignConfig.X_REQUEST_FEATURE_HEADER, "UnDefault");
-                        if (requestFeature.equalsIgnoreCase(requetFeature)) {
-                            filterResult = true;
-                        }
-                    }
-                }
-            }
-        }
+        boolean filterResult = true;
+        //TODO 找到对应实例,校验是否有灰度标记以及灰度版本
         return filterResult;
     }
 
@@ -149,17 +131,19 @@ public class GrayScaleRule extends ClientConfigEnabledRoundRobinRule {
     @Override
     public void setLoadBalancer(ILoadBalancer lb) {
         super.setLoadBalancer(lb);
-        getRule().setLoadBalancer(lb);
+        this.loadBalancer = lb;
     }
 
     public void setRule(IRule subRule) {
         this.iRule = (subRule != null) ? subRule : new RoundRobinRule();
     }
+
     public IRule getRule() {
-       return this.iRule != null ? iRule : new RoundRobinRule();
+        return this.iRule != null ? iRule : new RoundRobinRule();
     }
 
     @Override
     public void initWithNiwsConfig(IClientConfig iClientConfig) {
+        super.initWithNiwsConfig(iClientConfig);
     }
 }
