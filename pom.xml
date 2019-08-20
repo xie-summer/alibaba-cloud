@@ -102,6 +102,7 @@
         <module>cloud-user</module>
         <module>cloud-sso</module>
         <module>common-modules</module>
+        <module>cloud-starters</module>
     </modules>
     <build>
         <plugins>

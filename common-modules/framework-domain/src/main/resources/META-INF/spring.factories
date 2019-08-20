@@ -1,2 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.springframework.domain.base.configure.MetaHandlerConfigure
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=

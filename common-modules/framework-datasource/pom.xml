@@ -14,10 +14,10 @@
     <description>framework-datasource</description>
     <dependencies>
         <!--项目内部框架-->
-<!--        <dependency>-->
-<!--            <groupId>com.springframework</groupId>-->
-<!--            <artifactId>framework-trace</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.springframework</groupId>
+            <artifactId>framework-domain</artifactId>
+        </dependency>
         <!--监控-->
         <dependency>
             <groupId>com.baomidou</groupId>

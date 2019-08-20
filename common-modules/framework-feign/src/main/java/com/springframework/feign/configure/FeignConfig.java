@@ -3,6 +3,7 @@ package com.springframework.feign.configure;
 //import com.springframework.trace.constant.CatMsgConstants;
 
 import com.netflix.loadbalancer.ILoadBalancer;
+import feign.Feign;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;

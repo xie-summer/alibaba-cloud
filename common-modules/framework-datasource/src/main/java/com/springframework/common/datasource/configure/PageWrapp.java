@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.springframework.domain.base;
+package com.springframework.common.datasource.configure;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分页对象
@@ -27,9 +30,14 @@ import java.util.List;
  * @param <E>
  * @author summer
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Page<E> implements Serializable {
+public class PageWrapp<E> extends Page<E> {
     static final long serialVersionUID = -1L;
+    /**
+     * 查询条件
+     */
+    private Map<Object, Object> condition;
     /**
      * 总记录数
      */
@@ -47,4 +55,13 @@ public class Page<E> implements Serializable {
      */
     private List<E> pageItems = new ArrayList<E>();
 
+    /**
+     * KEY/VALUE 条件
+     *
+     * @return ignore
+     */
+    @Override
+    public Map<Object, Object> condition() {
+        return condition;
+    }
 }
