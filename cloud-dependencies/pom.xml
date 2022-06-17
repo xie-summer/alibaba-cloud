@@ -93,7 +93,7 @@
         <!--jackson-->
         <jackson.version>2.9.6</jackson.version>
         <!--fastjson-->
-        <fastjson.version>1.2.57</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <fastdfs-client.version>1.25.4-RELEASE</fastdfs-client.version>
         <!--swgger-->
         <swagger2.version>2.9.2</swagger2.version>
